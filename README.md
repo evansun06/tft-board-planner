@@ -12,6 +12,14 @@ home at university. The strategy is fun, and I thought making an acessible playg
 learn would be interesting.
 
  ### User Stories
- User Request 1: I want to be able to view and have access to multiple board set ups.
+ User Request 1: As a user, I want to have the ability to create multiple boards and have access to them.
+
+ User Request 2: As a user, I want to add champions onto specific locations (hexes) on my board.
+
+ User Request 3: As a user, I want to log how many wins my board has.
+
+ User Request 4: As a user, I want to add items to my champions.
+
+ 
 
  
