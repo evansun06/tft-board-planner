@@ -1,6 +1,6 @@
 package model;
 
-import exceptions.invalidLocationException;
+import exceptions.InvalidLocationException;
 
 // Represents a placeable entity that can be put on the
 // game board. Ex Champions, Accessories, Additional Perks.
@@ -17,9 +17,21 @@ public abstract class Placeable {
         this.readilyPlaceable = readilyPlaceable;
     }
 
+    // REQUIRES: 0 <= x <= 6, 0 <= y <= 3.
+    // MODIFIES: this
+    // EFFECTS: Sets locx and locy of a  Placeable to the desired location.
     protected void setLocation(int x, int y) {
         locx = x;
         locy = y;
+    }
+
+    // getters
+    public int getX () {
+        return this.locx;
+    }
+
+    public int getY () {
+        return this.locy;
     }
 
 

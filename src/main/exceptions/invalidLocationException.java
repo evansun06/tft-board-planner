@@ -1,5 +1,5 @@
 package exceptions;
 
-public class invalidLocationException extends Exception{
+public class InvalidLocationException extends Exception{
 
 }

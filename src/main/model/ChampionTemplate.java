@@ -20,7 +20,7 @@ public class ChampionTemplate extends Placeable{
     //          no location.
     //          Sets readilyPlaceble to true (superclass field)
     public ChampionTemplate(String name, int health, int armour, int mr, int ad, int ap, int critChance, 
-                    int critX, int range, int cost) {
+                    int critX,int attackSpeed, int range, int cost) {
 
         super(true);
         setLocation(-1, -1);

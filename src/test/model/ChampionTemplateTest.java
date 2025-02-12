@@ -10,7 +10,7 @@ public class ChampionTemplateTest {
     @BeforeEach
     void setUp() {
         ahri = new ChampionTemplate("Ahri", 100, 50, 50, 25, 20, 0,
-                                         100, 3, 2);                                       
+                                          100, 10, 3, 2);                                       
     }
 
     @Test 
