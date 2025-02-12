@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class ChampionTemplateTest {
+public class ChampionTemplateTests {
     ChampionTemplate ahri;
 
     @BeforeEach

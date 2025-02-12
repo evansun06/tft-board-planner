@@ -3,7 +3,7 @@ package model;
 // Champion is a placeable template with dynamic stats such as damage
 // but with static stats such as its cost. ChampionTemplates wil
 public class ChampionTemplate extends Placeable{
-    protected String name;
+    
     protected int health;
     protected int armour;
     protected int magicResist;
@@ -22,7 +22,7 @@ public class ChampionTemplate extends Placeable{
     public ChampionTemplate(String name, int health, int armour, int mr, int ad, int ap, int critChance, 
                     int critX,int attackSpeed, int range, int cost) {
 
-        super(true);
+        super(true, name);
         setLocation(-1, -1);
 
         //Set Base Stats
@@ -39,9 +39,6 @@ public class ChampionTemplate extends Placeable{
     }
 
     // Getters
-    public String getName() {
-        return this.name;
-    }
 
     public int getHealth() {
         return health;

@@ -6,6 +6,7 @@ import exceptions.InvalidLocationException;
 // game board. Ex Champions, Accessories, Additional Perks.
 public abstract class Placeable {
 
+    protected String name;
     protected int locx;
     protected int locy;
 
@@ -13,7 +14,8 @@ public abstract class Placeable {
     
     //EFFECTS: Constructs an placeable object with no
     //         location determined.
-    public Placeable(Boolean readilyPlaceable) {
+    public Placeable(Boolean readilyPlaceable, String name) {
+        this.name = name;
         this.readilyPlaceable = readilyPlaceable;
     }
 
@@ -26,11 +28,15 @@ public abstract class Placeable {
     }
 
     // getters
-    public int getX () {
+    public String getName() {
+        return this.name;
+    }
+
+    public int getX() {
         return this.locx;
     }
 
-    public int getY () {
+    public int getY() {
         return this.locy;
     }
 
