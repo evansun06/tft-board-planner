@@ -12,7 +12,7 @@ public class SetTests {
     @BeforeEach
     void setUp() {
         testSet = new Set("Set 0");
-        jayce = new ChampionTemplate ("Jayce", 100, 10, 10, 30, 15, 0, 100, 10, 5, 5);
+        jayce = new ChampionTemplate("Jayce", 100, 10, 10, 30, 15, 0, 100, 10, 5, 5);
         leona = new ChampionTemplate("Leona", 200, 30, 30, 5, 5, 0, 60, 10, 1, 2);
     }
 
@@ -36,6 +36,9 @@ public class SetTests {
 
     @Test
     void findPlaceableTest() {
+        //Search on empty list
+        assertNull(testSet.findPlaceable("Leona"));
+
         //Test Single Template
         testSet.templateAdd(jayce);
         assertEquals(jayce, testSet.findPlaceable("Jayce"));
@@ -54,6 +57,14 @@ public class SetTests {
         testSet.templateAdd(jayce);
         assertEquals(jayce, testSet.findPlaceable("Jayce"));
         assertEquals(1, testSet.getPlaceables().size());
+    }
+
+    @Test
+    void loadSet13Test() {
+        testSet.loadSet13();
+        assertEquals(40, testSet.getPlaceables().size());
+        assertEquals("Lux", testSet.findPlaceable("Lux").name);
+        
 
     }
 

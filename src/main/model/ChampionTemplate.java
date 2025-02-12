@@ -8,7 +8,7 @@ public class ChampionTemplate extends Placeable{
     protected int armour;
     protected int magicResist;
     protected int attackDamage;
-    protected int attackSpeed;
+    protected double attackSpeed;
     protected int abilityPower;
     protected int critChance;
     protected int critMultiplier;
@@ -20,7 +20,7 @@ public class ChampionTemplate extends Placeable{
     //          no location.
     //          Sets readilyPlaceble to true (superclass field)
     public ChampionTemplate(String name, int health, int armour, int mr, int ad, int ap, int critChance, 
-                    int critX,int attackSpeed, int range, int cost) {
+                    int critX, double attackSpeed, int range, int cost) {
 
         super(true, name);
         setLocation(-1, -1);
@@ -56,7 +56,7 @@ public class ChampionTemplate extends Placeable{
         return attackDamage;
     }
 
-    public int getAttackSpeed() {
+    public double getAttackSpeed() {
         return attackSpeed;
     }
 
