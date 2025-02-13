@@ -35,19 +35,22 @@ public class SetTests {
     }
 
     @Test
-    void findPlaceableTest() {
+    void findChampionTemplateTest() {
         //Search on empty list
-        assertNull(testSet.findPlaceable("Leona"));
+        assertNull(testSet.findChampionTemplate("Leona"));
 
-        //Test Single Template
+        //Test Single ChampionTemplate
         testSet.templateAdd(jayce);
-        assertEquals(jayce, testSet.findPlaceable("Jayce"));
-        assertNull(testSet.findPlaceable("Leona"));
-        //Test Multiple Template Search
+        assertTrue(testSet.findChampionTemplate("Jayce") instanceof ChampionTemplate);
+        assertEquals(jayce, testSet.findChampionTemplate("Jayce"));
+        assertNull(testSet.findChampionTemplate("Leona"));
+        //Test Multiple ChampionTemplate Search
         testSet.templateAdd(leona);
-        assertEquals(jayce, testSet.findPlaceable("Jayce"));
-        assertEquals(leona, testSet.findPlaceable("Leona"));
-        assertNull(testSet.findPlaceable("Jax"));
+        assertEquals(jayce, testSet.findChampionTemplate("Jayce"));
+        assertEquals(leona, testSet.findChampionTemplate("Leona"));
+        assertNull(testSet.findChampionTemplate("Jax"));
+        
+
 
     }
 
@@ -55,15 +58,19 @@ public class SetTests {
     void addTemplateTest() {
         assertTrue(testSet.getPlaceableHashMap().isEmpty());
         testSet.templateAdd(jayce);
-        assertEquals(jayce, testSet.findPlaceable("Jayce"));
+        assertEquals(jayce, testSet.findChampionTemplate("Jayce"));
         assertEquals(1, testSet.getPlaceableHashMap().size());
+
+        
+
+
     }
 
     @Test
     void loadSet13Test() {
         testSet.loadSet13();
         assertEquals(40, testSet.getPlaceableHashMap().size());
-        assertEquals("Lux", testSet.findPlaceable("Lux").name);
+        assertEquals("Lux", testSet.findChampionTemplate("Lux").name);
         
 
     }

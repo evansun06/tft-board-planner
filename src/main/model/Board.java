@@ -9,51 +9,100 @@ public class Board {
     public static final int xMax = 7;
     public static final int yMin = 0;
     public static final int yMax = 3;
-    public final int maxRosterSize = 10;
-
+    private final int maxRosterSize = 10;
     private final Set set;
-    private ArrayList<ChampionInstance> roster;
+
+    private ArrayList<Placeable> roster;
+    private ArrayList<Integer> winHistory;
+    private String name;
 
 
     // EFFECT: Creates blank board for a specific Set(version)
     //         with an empty roster.  
-    public Board(Set version) {
+    public Board(Set version, String name) {
+        this.name = name;
         this.set = version;
         this.roster = new ArrayList<>();
+        this.winHistory = new ArrayList<>();
     }
 
-    // EFFECT: Creats an blank board with unknown set.
-    public Board() {
-        this.roster = new ArrayList<>();
-        this.set = null;
-    }
 
     // REQUIRES: Base stat champion with name != null
     //           Champ must be within the set
     // MODIFIES: this
-    // EFFECT: Adds a new champion instance to the roster.
-    //         Does nothing if roster is full.
-    public void addToRoster(ChampionInstance champ) {
-        
+    // EFFECT: Adds a new champion instance to the roster if:
+    //         -  rostersize is not maxed
+    //         -  location on the board available
+    //         -  championTemplate is readily placeable
+    //         Else, does nothing.
+  
+    public void addChampionToBoard(ChampionTemplate champ, int x, int y) {
+        if (champ.readilyPlaceable && roster.size() < maxRosterSize && locationIsEmpty(x, y)) {
+            roster.add(new ChampionInstance(champ, x, y));
+        }
     }
 
-    // REQUIRES: Valid id of a champion on the roster
+    // REQUIRES:  0 <= x <= 6, 0 <= y <= 3
     // MODIFIES: this
-    // EFFECT: Removes the corresponding champion from the
+    // EFFECT: Removes the champion at location (x,y) from the
     //         roster.
-    public void addToRoster(int id) {
-        
+    //         Does nothing if no champion at location.
+    public void removeChampionFromRoster(int x, int y) {
+        roster.remove(getChampionFromBoard(x, y));
     }
-    
+
+    // REQUIRES:  0 <= x <= 6, 0 <= y <= 3.
+    // MODIFIES: none.
+    // EFFECT: Returns true if location is available on board
+    public Boolean locationIsEmpty(int x, int y) {
+        for (Placeable p: roster) {
+            if (p.getX() == x && p.getY() == y) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+
+    // REQUIRES: 1 <= placement <= 8
+    // MODIFIES: this
+    // EFFECT: adds a game placement to history
+    public void addToHistory(int placement) {
+        this.winHistory.add(placement);
+    }
+
+    // REQUIRES: 0 <= x <= 6, 0 <= y <= 3
+    // MODIFIES: this 
+    // EFFECT: returns the ChampionInstance for the given location
+    //         else null
+    public ChampionInstance getChampionFromBoard(int x, int y) {
+        for (Placeable p: roster) {
+            if (p.getX() == x && p.getY() == y) {
+                return (ChampionInstance)p;
+            }
+        }
+        return null;
+    }
 
     // Getters
-    public ArrayList<ChampionInstance> getRoster() {
-        return (this.roster);
+    public ArrayList<Placeable> getRoster() {
+        return this.roster;
     }
 
     public Set getSet() {
         return this.set;
     }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public ArrayList<Integer> getWinHistory() {
+        return this.winHistory;
+    }
+
+    
+
     
 
 

@@ -28,20 +28,22 @@ public class Set {
     // REQUIRES: name corresponds to a valid Placeable
     //           in the arrayList Placeables
     // MODIFIES: none
-    // EFFECTS: returns the desired placeable within the set
+    // EFFECTS: returns the desired ChampionTemplate within the set
     //          if arraylist is empty or no result return null.
-    public Placeable findPlaceable(String name) {
-        return placeablesMap.get(name);
-
+    //          if not ChampionTemplate rather other Placeable return null.
+    public ChampionTemplate findChampionTemplate(String name) {
+        if (placeablesMap.get(name) instanceof ChampionTemplate) {
+            return ((ChampionTemplate)placeablesMap.get(name));
+        }
+        return null;
     }
 
     // REQUIRES: template isn't a subclass
     // MODIFIES: this
     // EFFECT: adds a template to a sets available champions
-    public void templateAdd(ChampionTemplate template) {
+    public void templateAdd(Placeable template) {
         placeablesMap.put(template.getName(), template);
     }
-
 
 
     //Getters
