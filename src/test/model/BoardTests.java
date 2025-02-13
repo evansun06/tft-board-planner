@@ -103,7 +103,7 @@ public class BoardTests {
     @Test
     void addToHistoryTest() {
         assertTrue(testBoard.getWinHistory().isEmpty());
-        testBoard.getWinHistory().add(1);
+        testBoard.addToHistory(1);
         assertEquals(1, testBoard.getWinHistory().get(0));
 
     }
