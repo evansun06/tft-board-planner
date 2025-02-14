@@ -31,6 +31,18 @@ public class Planner {
         boardDeck.remove(index);
     }
 
+    // REQUIRES: boardDeck has only unique board names
+    // EFFECT: get the corresponding board if name matches
+    //         else return null
+    public Board getBoard(String name) {
+        for (Board b: boardDeck) {
+            if (b.getName() == name) {
+                return b;
+            }
+        }
+        return null;
+    }
+
     // Getters
     public ArrayList<Board> getBoardDeck() {
         return this.boardDeck;

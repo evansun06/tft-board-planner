@@ -38,5 +38,14 @@ public class PlannerTest {
         testPlanner.removeBoard("MyNewBoard1");
         assertEquals(1, testPlanner.getBoardDeck().size());
     }
+
+    @Test
+    void getBoardTest() {
+        assertNull(testPlanner.getBoard("My board"));
+        testPlanner.addBoard(set13, "MyFirstSet");
+        testPlanner.addBoard(set13, "SecondSet");
+        assertNull(testPlanner.getBoard("thirdset"));
+        assertEquals("SecondSet",testPlanner.getBoard("SecondSet").getName());
+    }
 }
 

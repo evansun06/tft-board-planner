@@ -6,9 +6,9 @@ import model.*;
 
 // Represents the menu system for editing a board.
 public class BoardMenu {
-    private Scanner reader;
-    private static Set set;
+    private Scanner reader  = new Scanner(System.in);
     private Board board;
+    private Boolean leaveMenu;
 
     // EFFECTS: - Connect the board to the menu
     //          - if its the first board instantiated in the planner
@@ -17,16 +17,21 @@ public class BoardMenu {
     //         
     public BoardMenu(Board b) {
         this.board = b;
-        reader = new Scanner(System.in);
-        displayBoard();
-        displayBoardOptions();
+        this.board.getSet().loadSet13();
+        this.leaveMenu = false;
+        do {
+            displayBoard();
+            displayBoardOptions();
+            recieveBoardOptions();
+        } while (!this.leaveMenu);
+        
     }
 
     // EFFECTS: Display all board coordinates
     //          If champion is at location also display name
     public void displayBoard() {
         System.out.println("-----------|" + board.getName() + "|----------");
-        for (int x = 0; x < 7; x++) {
+        for (int x = 0; x < 4; x++) {
             for (int y = 0; y < 7; y++) {
                 Placeable champion = board.getChampionFromBoard(x,y);
                 if (champion != null) {
@@ -39,22 +44,24 @@ public class BoardMenu {
         }
     }
 
+    // MODIFIES: this
     // EFFECTS: collect option and run consequent functions
     public void recieveBoardOptions() {
-        int option = reader.nextInt();
+        int option = Integer.parseInt(reader.nextLine());
+        
         switch (option) {
             case 1: {
                 System.out.println("Please input the exact name of the Champion");
                 addChampion(reader.nextLine());
-            }
+                break;
+            } case 2: {
 
-            case 2:
+            } case 3: {
 
-            case 3:
-
-            case 4:
-
-            default: {
+            } case 4: {
+                leaveMenu = true;
+                break;
+            } default: {
                 System.out.println("Invalid option. Please try again.");
                 recieveBoardOptions();
             }
@@ -71,7 +78,7 @@ public class BoardMenu {
         System.out.println("4. Go back to main menu");
     }
 
-    // MODIFIES: Board, Planner
+    // MODIFIES: this
     // EFFECT: add the desired champion to the board
     //         prompt users to try again if:
     //          - champion is already there
@@ -79,23 +86,23 @@ public class BoardMenu {
     //          - invalid champion location
     public void addChampion(String userSearch) {
         
-        if (set.findChampionTemplate(userSearch) != null) {
+        if (board.getSet().findChampionTemplate(userSearch) != null) {
             int x;
             int y;
             System.out.println("Champion found:" + userSearch);
             System.out.println("Input x coordinate:");
-            x = reader.nextInt();
+            x = Integer.parseInt(reader.nextLine());
             while (x < 0 || x > 7) {
                 System.out.println("Please insert a proper x coordinate [0, 7]");
-                x = reader.nextInt();
+                x = Integer.parseInt(reader.nextLine());
             }
             System.out.println("Input y coordinate:");
-            y = reader.nextInt();
+            y = Integer.parseInt(reader.nextLine());
             while (y < 0 || y > 4) {
                 System.out.println("Please insert a proper y coordinate [0, 4]");
-                y = reader.nextInt();
+                y = Integer.parseInt(reader.nextLine());
             }
-            board.addChampionToBoard(set.findChampionTemplate(userSearch), x, y);
+            board.addChampionToBoard(board.getSet().findChampionTemplate(userSearch), x, y);
         }  else {
             System.out.println("Couldn't find champion, please try again");
             addChampion(reader.nextLine());

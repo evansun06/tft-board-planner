@@ -7,12 +7,17 @@ import model.*;
 
 // Represents the menu system for the main board planner application.
 public class MainMenu {
+    private boolean exitProgram;
     private Scanner reader = new Scanner(System.in);
     private Planner planner;
 
     public MainMenu() {
         planner = new Planner();
-        mainMenuPage();
+        exitProgram = false;
+        do {
+            mainMenuPage();
+        } while (!exitProgram);
+        
     }
 
     // MODIFIES: Planner
@@ -43,25 +48,33 @@ public class MainMenu {
         System.out.println("-------------| Options | -------------");
         System.out.println("1. Create a new board");
         System.out.println("2. Edit a board");
+        System.out.println("3. Quit program");
 
     }
 
-    // MODIFIES: Planner
+    // MODIFIES: this
     // EFFECT: recieves a option for the above selections.
     //         else prompts user to try again
     private void recieveSurfaceOption () {
         int option = reader.nextInt();
         reader.nextLine();
         
-        if (option == 1) {
-            System.out.println("Give your board a name:");
-            String name = reader.nextLine();
-            new BoardMenu(new Board(new Set("Set Thirteen"), name));
-        } else if (option == 2) {
-
-        } else {
-            System.err.println("Invalid option. Please enter again.");
-            recieveSurfaceOption();
+        switch (option) {
+            case 1:{
+                System.out.println("Give your board a name:");
+                String name = reader.nextLine();
+                planner.addBoard(new Set("SetThirteen"), name);
+                new BoardMenu(planner.getBoard(name));
+                break;
+            } case 2: {
+                break;
+            } case 3: {
+                this.exitProgram = true;
+                break;
+            } default: {
+                System.err.println("Invalid option. Please enter again.");
+                recieveSurfaceOption();
+            }
         }
     }
 
