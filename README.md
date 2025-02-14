@@ -14,9 +14,9 @@ learn would be interesting.
  ### User Stories
  User Request 1: As a user, I want to have the ability to create multiple boards and have access to them.
 
- User Request 2: As a user, I want to be able to access the most recent set in TFT (set 13) or make for fun sets.
+ User Request 2: As a user, I want to add champions (later additional accessories) onto specific locations (hexes) on my board.
 
- User Request 2: As a user, I want to add champions onto specific locations (hexes) on my board.
+ User Request 3: As a user, I want to view my list of boards. Consequently I want to view my list of Champions within each board.
 
  User Request 3: As a user, I want to log how many wins my board has.
 

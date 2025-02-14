@@ -23,7 +23,7 @@ public class Planner {
     //         if no corresponding name, does nothing.
     public void removeBoard(String name) {
         int index = 0;
-        for(Board b: boardDeck) {
+        for (Board b: boardDeck) {
             if (b.getName() == name) {
                 index = boardDeck.indexOf(b);
             }
