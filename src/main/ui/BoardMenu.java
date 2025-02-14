@@ -21,6 +21,8 @@ public class BoardMenu {
         this.leaveMenu = false;
         do {
             displayBoard();
+            displayWinHistory();
+            displayAllChampsInSet();
             displayBoardOptions();
             recieveBoardOptions();
         } while (!this.leaveMenu);
@@ -31,8 +33,8 @@ public class BoardMenu {
     //          If champion is at location also display name
     public void displayBoard() {
         System.out.println("-----------|" + board.getName() + "|----------");
-        for (int x = 0; x < 4; x++) {
-            for (int y = 0; y < 7; y++) {
+        for (int y = 0; y < 4; y++) {
+            for (int x = 0; x < 7; x++) {
                 Placeable champion = board.getChampionFromBoard(x,y);
                 if (champion != null) {
                     System.out.print("|" + champion.getName() + "(" + x + "," + y + ")" + "|     ");
@@ -42,6 +44,16 @@ public class BoardMenu {
             }
             System.out.println();
         }
+
+    }
+
+    // EFFECTS: Display win history of board
+    public void displayWinHistory() {
+        System.out.print("History:");
+        for (int i: board.getWinHistory()) {
+            System.out.print(i + ", ");
+        }
+
     }
 
     // MODIFIES: this
@@ -55,9 +67,11 @@ public class BoardMenu {
                 addChampion(reader.nextLine());
                 break;
             } case 2: {
-
+                removeChampion();
+                break;
             } case 3: {
-
+                updateMatchHistory();
+                break;
             } case 4: {
                 leaveMenu = true;
                 break;
@@ -68,14 +82,47 @@ public class BoardMenu {
         }
     }
 
+    // EFFECT: display available champs in the set
+    public void displayAllChampsInSet() {
+        System.out.println("----------Set 13 Champions----------");
+        for (int cost = 1; cost < 6; cost++) {
+            System.out.print(cost + " cost champs:");
+            for (Placeable champ: board.getSet().getPlaceableHashMap().values()) {
+                if (champ instanceof ChampionTemplate) {
+                    ChampionTemplate c = (ChampionTemplate) champ;
+                    if (c.getCost() == cost) {
+                        System.out.print(c.getName() + " ");
+                    }
+                }
+            }
+            System.out.println();
+        }
+    }
+
+
     // EFFECT: display board options on terminal
     public void displayBoardOptions() {
         System.out.println();
         System.out.println("----------|Options|-----------");
         System.out.println("1. Add champion to board");
-        System.out.println("2. Move a champion's position");
-        System.out.println("3. Remove a champion from board");
-        System.out.println("4. Go back to main menu");
+        System.out.println("2. Remove a champion from board");
+        System.out.println("3. Update placement history");
+        System.out.println("4. Return to main menu");
+    }
+
+
+    // MODIFIES: this
+    // EFFECT: prompts user to give a game placement [0,8]
+    //         if invalid input retry.
+    public void updateMatchHistory() {
+        int i;
+        System.out.println("Enter your recent placement 0-8");
+        i = Integer.parseInt(reader.nextLine());
+        while (i < 0 || i > 8) {
+            System.out.println("Please try again");
+            i = Integer.parseInt(reader.nextLine());
+        }
+        board.addToHistory(i);
     }
 
     // MODIFIES: this
@@ -107,5 +154,26 @@ public class BoardMenu {
             System.out.println("Couldn't find champion, please try again");
             addChampion(reader.nextLine());
         }
+    }
+
+    // MODIFIES: this
+    // EFFECT: prompts user to give coordinates of the
+    //         champion they wish to remove.
+    public void removeChampion() {
+        int x;
+        int y;
+        System.out.println("Input x coordinate");
+        x = Integer.parseInt(reader.nextLine());
+        while (x < 0 || x > 7) {
+            System.out.println("Please insert a proper x coordinate [0, 7]");
+            x = Integer.parseInt(reader.nextLine());
+        }
+        System.out.println("Input y coordinate:");
+        y = Integer.parseInt(reader.nextLine());
+        while (y < 0 || y > 4) {
+            System.out.println("Please insert a proper y coordinate [0, 4]");
+            y = Integer.parseInt(reader.nextLine());
+        }
+        board.removeChampionFromRoster(x, y);
     }
 }

@@ -2,7 +2,7 @@ package model;
 
 // Champion is a placeable template with dynamic stats such as damage
 // but with static stats such as its cost. ChampionTemplates wil
-public class ChampionTemplate extends Placeable{
+public class ChampionTemplate extends Placeable {
     
     protected int health;
     protected int armour;

@@ -51,7 +51,7 @@ public class Set {
         return this.name;
     }
 
-    public HashMap<String, Placeable> getPlaceableHashMap () {
+    public HashMap<String, Placeable> getPlaceableHashMap() {
         return this.placeablesMap;
     }
 

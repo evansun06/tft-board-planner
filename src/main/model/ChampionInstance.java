@@ -29,7 +29,7 @@ public class ChampionInstance extends ChampionTemplate {
 
 
     //Getters
-    public int getInstanceId () {
+    public int getInstanceId() {
         return this.instanceId;
     }
 

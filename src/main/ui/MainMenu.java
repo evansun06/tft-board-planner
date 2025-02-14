@@ -1,6 +1,5 @@
 package ui;
 
-import model.Planner;
 import java.util.Scanner;
 import model.*;
 
@@ -29,14 +28,15 @@ public class MainMenu {
         displaySurfaceOptions();
         recieveSurfaceOption();
     }
+
     // EFFECT: Prints the catalogue of boards within the planner
     //         if no boards, prompt to make a board
     private void printBoardDeck() {
-        System.out.println("-----------| Your boards | -----------");
+        System.out.println("\n-----------| Your boards | -----------");
         if (!planner.getBoardDeck().isEmpty()) {
             for (int x = 0; x < planner.getBoardDeck().size(); x++) {
                 Board b = planner.getBoardDeck().get(x);
-                System.out.println((x+1) + ". " + b.getName());
+                System.out.println((x + 1) + ". " + b.getName());
             }
         } else {
             System.err.println("You have no boards!");
@@ -55,18 +55,19 @@ public class MainMenu {
     // MODIFIES: this
     // EFFECT: recieves a option for the above selections.
     //         else prompts user to try again
-    private void recieveSurfaceOption () {
+    private void recieveSurfaceOption() {
         int option = reader.nextInt();
         reader.nextLine();
         
         switch (option) {
-            case 1:{
+            case 1: {
                 System.out.println("Give your board a name:");
                 String name = reader.nextLine();
                 planner.addBoard(new Set("SetThirteen"), name);
                 new BoardMenu(planner.getBoard(name));
                 break;
             } case 2: {
+                editBoard();
                 break;
             } case 3: {
                 this.exitProgram = true;
@@ -76,6 +77,26 @@ public class MainMenu {
                 recieveSurfaceOption();
             }
         }
+    }
+
+    // EFFECT: Prompts user to select board and instantiates
+    //         a new BoardMenu.
+    //         catches outofbounds index and tries again
+    //         if not boards made return to main menu
+    private void editBoard() {
+        if (planner.getBoardDeck().isEmpty()) {
+            System.out.println("You have no boards");
+            return;
+        }
+
+        System.out.println("Input the corresponding number beside the board you want to edit");
+        try {
+            new BoardMenu(planner.getBoardDeck().get(Integer.parseInt(reader.nextLine()) - 1));
+        } catch (Exception e) {
+            System.out.println("Try again");
+            editBoard();
+        }
+        
     }
 
     public static void main(String[] args) throws Exception {
