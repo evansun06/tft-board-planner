@@ -53,7 +53,7 @@ public class BoardMenu {
         for (int i: board.getWinHistory()) {
             System.out.print(i + ", ");
         }
-
+        System.err.println();
     }
 
     // MODIFIES: this
@@ -116,7 +116,7 @@ public class BoardMenu {
     //         if invalid input retry.
     public void updateMatchHistory() {
         int i;
-        System.out.println("Enter your recent placement 0-8");
+        System.out.println("Enter your recent placement 1st-8th");
         i = Integer.parseInt(reader.nextLine());
         while (i < 0 || i > 8) {
             System.out.println("Please try again");

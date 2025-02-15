@@ -56,8 +56,7 @@ public class MainMenu {
     // EFFECT: recieves a option for the above selections.
     //         else prompts user to try again
     private void recieveSurfaceOption() {
-        int option = reader.nextInt();
-        reader.nextLine();
+        int option = Integer.parseInt(reader.nextLine());
         
         switch (option) {
             case 1: {
