@@ -9,7 +9,7 @@ public class SetLoader {
 
     // EFFECT: Assign set to the object and provides a relative file address 
     // MODIFIES: this
-    public SetLoader() {
+    public SetLoader(String address) {
 
     }
 
