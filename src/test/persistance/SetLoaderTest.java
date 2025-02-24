@@ -41,15 +41,15 @@ public class SetLoaderTest {
 
     @Test
     void loadChampionsToSetCorrectAddresTest() {
-        assertNull(testSet.findChampionTemplate("Ahri").getName());
+        assertNull(testSet.findChampionTemplate("Ambessa").getName());
 
         try {
             testSetLoader.loadChampionsToSet(testSet);
         } catch (Exception e) {
             fail("Exception not expected");
         }
-        
-        assertEquals("Ahri", testSet.findChampionTemplate("Ahri").getName());
+
+        assertEquals("Ambessa", testSet.findChampionTemplate("Ambessa").getName());
 
     }
 
