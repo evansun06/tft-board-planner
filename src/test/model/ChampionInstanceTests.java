@@ -6,18 +6,24 @@ import org.junit.jupiter.api.Test;
 
 public class ChampionInstanceTests {
     ChampionTemplate zeriTemplate;
+    ChampionInstance zeri0;
     ChampionInstance zeri1;
     ChampionInstance zeri2;
 
     @BeforeEach
     void setUp() {
+        
         zeriTemplate = new ChampionTemplate("Zeri", 100, 10, 5, 50, 10,10, 10, 10, 6, 2);
+        
+        zeri0 = new ChampionInstance(zeriTemplate, 1, 3);
+        zeri0.resetInstanceId();
         zeri1 = new ChampionInstance(zeriTemplate, 1, 3);
         zeri2 = new ChampionInstance(zeriTemplate, 3, 3);
     }
 
     @Test
     void constructorTest() {
+        
         //Test superclass constructor
         assertEquals("Zeri", zeri1.getName());
         assertEquals("Zeri", zeri2.getName());
@@ -39,6 +45,16 @@ public class ChampionInstanceTests {
         ChampionInstance zeri3 = new ChampionInstance(zeriTemplate, 4, 4);
         assertEquals(3, zeri3.getInstanceId());
 
+    }
+
+    @Test
+    void resetInstanceIdTest() {
+        assertEquals(1, zeri1.getInstanceId());
+        ChampionInstance zeri3 = new ChampionInstance(zeriTemplate, 0, 0);
+        assertEquals(3, zeri3.getInstanceId());
+        zeri3.resetInstanceId();
+        ChampionInstance zeri4 = new ChampionInstance(zeriTemplate, 4, 0);
+        assertEquals(1, zeri4.getInstanceId());
     }
 
 }

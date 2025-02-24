@@ -27,6 +27,11 @@ public class ChampionInstance extends ChampionTemplate {
         nextId++;
     }
 
+    // MODIFIES: this
+    // EFFECT: Resets the universal instance Id
+    public void resetInstanceId() {
+        this.nextId = 1;
+    }
 
     //Getters
     public int getInstanceId() {
@@ -36,4 +41,6 @@ public class ChampionInstance extends ChampionTemplate {
     public int getNextId() {
         return nextId;
     }
+
+    
 }
