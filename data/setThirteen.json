@@ -1,5 +1,4 @@
-{
-    "champions": [
+{   "champions": [
         {"name":"Akali","health":1000, "ar":30,"mr": 20,"ad":50,"ap":0, "crit%":25, "critX":200, "atspd":0.8, "range":1,"cost":2},
         {"name":"Ambessa","health":1100, "ar":40,"mr":25,"ad":60,"ap":0, "crit%":20, "critX":180, "atspd":0.75, "range":1,"cost":4},
         {"name":"Amumu","health":1200, "ar":50,"mr":30,"ad":40,"ap":0, "crit%":15, "critX":150, "atspd":0.7, "range":1,"cost":1},
