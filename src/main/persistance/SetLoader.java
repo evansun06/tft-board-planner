@@ -1,6 +1,7 @@
 package persistance;
 
 import model.Set;
+import java.io.IOException;
 
 // Set loader will read a constant JSON file with all the premade champions available.
 // This reduces startup runtime.
@@ -13,12 +14,18 @@ public class SetLoader {
 
     }
 
+    public String readJson() throws IOException {
+        return "";
+    }
+
     // EFFECT: Load Champions in the JSON to set
     // MODIFIES: set
     // REQUIRES: A properly formatted JSON file.
-    public void loadChampionsToSet(Set set) {
+    public void loadChampionsToSet(Set set) throws IOException {
 
     }
+
+
 
     // GETTERS
     public String getAddress() {

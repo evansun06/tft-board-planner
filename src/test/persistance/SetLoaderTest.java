@@ -1,9 +1,7 @@
 package persistance;
 
 import static org.junit.Assert.*;
-
 import java.io.IOException;
-
 import javax.imageio.IIOException;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -40,7 +38,7 @@ public class SetLoaderTest {
     }
 
     @Test
-    void loadChampionsToSetCorrectAddresTest() {
+    void loadChampionsToSetCorrectAddressTest() {
         assertNull(testSet.findChampionTemplate("Ambessa").getName());
 
         try {
