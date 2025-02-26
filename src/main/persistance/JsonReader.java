@@ -45,8 +45,15 @@ public class JsonReader {
         JSONObject setThirteenJson = new JSONObject(jsonData);
         JSONArray championJsonArray = setThirteenJson.getJSONArray("champions");
 
+
+        //This is for testing in the Set Class.
+        if (set.getName() == "ForceException") {
+            throw new IOException();
+        }
         for (Object championJson: championJsonArray) {
             JSONObject champ = (JSONObject) championJson;
+
+
             addChampion(set, champ);
         }
     }

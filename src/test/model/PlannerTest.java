@@ -6,13 +6,10 @@ import org.junit.jupiter.api.Test;
 
 public class PlannerTest {
     Planner testPlanner;
-    Set set13;
 
     @BeforeEach
     void setUp() {
         testPlanner = new Planner();
-        set13 = new Set("Set 13");
-        set13.loadSet13();
     }
 
     @Test
@@ -23,17 +20,17 @@ public class PlannerTest {
     @Test
     void addBoardTest() {
         assertTrue(testPlanner.getBoardDeck().isEmpty());
-        testPlanner.addBoard(set13, "MyNewBoard1");
+        testPlanner.addBoard( "MyNewBoard1");
         assertEquals(1, testPlanner.getBoardDeck().size());
-        testPlanner.addBoard(set13, "MyNewoard2");
+        testPlanner.addBoard( "MyNewoard2");
         assertEquals(2, testPlanner.getBoardDeck().size());
     }
 
     @Test
     void removeBoardTest() {
         assertEquals(0, testPlanner.getBoardDeck().size());
-        testPlanner.addBoard(set13, "MyNewBoard1");
-        testPlanner.addBoard(set13, "MyNewBoard2");
+        testPlanner.addBoard( "MyNewBoard1");
+        testPlanner.addBoard( "MyNewBoard2");
         assertEquals(2, testPlanner.getBoardDeck().size());
         testPlanner.removeBoard("MyNewBoard1");
         assertEquals(1, testPlanner.getBoardDeck().size());
@@ -42,8 +39,8 @@ public class PlannerTest {
     @Test
     void getBoardTest() {
         assertNull(testPlanner.getBoard("My board"));
-        testPlanner.addBoard(set13, "MyFirstSet");
-        testPlanner.addBoard(set13, "SecondSet");
+        testPlanner.addBoard( "MyFirstSet");
+        testPlanner.addBoard( "SecondSet");
         assertNull(testPlanner.getBoard("thirdset"));
         assertEquals("SecondSet",testPlanner.getBoard("SecondSet").getName());
     }

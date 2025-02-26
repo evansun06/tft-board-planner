@@ -17,7 +17,6 @@ public class BoardMenu {
     //         
     public BoardMenu(Board b) {
         this.board = b;
-        this.board.getSet().loadSet13();
         this.leaveMenu = false;
         do {
             displayBoard();

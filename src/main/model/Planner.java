@@ -13,9 +13,9 @@ public class Planner {
 
     // REQUIRES: name be unique
     // MODIFIES: this
-    // EFFECT: Adds a board to the deck with unique name
-    public void addBoard(Set set, String name) {
-        boardDeck.add(new Board(set, name));
+    // EFFECT: Adds a board with set13 champions to the deck with unique name
+    public void addBoard(String name) {
+        boardDeck.add(new Board(name));
     }
 
     // MODIFIES: this

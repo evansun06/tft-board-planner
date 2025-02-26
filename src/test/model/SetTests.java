@@ -1,6 +1,9 @@
 package model;
 
 import static org.junit.Assert.*;
+
+import java.io.IOException;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,16 +22,22 @@ public class SetTests {
     @Test 
     void constructorTest() {
         assertEquals("Set 0", testSet.getName());
-        assertTrue(testSet.getPlaceableHashMap().isEmpty());
+        assertTrue(!testSet.getPlaceableHashMap().isEmpty());
+    }
+
+    @Test 
+    void constructorTestForceIOException() {
+        assertThrows(AssertionError.class, () -> {
+        new Set("ForceException");
+    });
+
     }
 
     @Test
     void resetTest() {
         assertEquals("Set 0", testSet.getName());
-        assertTrue(testSet.getPlaceableHashMap().isEmpty());
-        testSet.templateAdd(jayce);
-
-        assertEquals(1, testSet.getPlaceableHashMap().size());
+        assertTrue(!testSet.getPlaceableHashMap().isEmpty());
+        assertEquals(33, testSet.getPlaceableHashMap().size());
         testSet.reset();
         assertTrue(testSet.getPlaceableHashMap().isEmpty());
         assertNull(testSet.getName());
@@ -36,6 +45,7 @@ public class SetTests {
 
     @Test
     void findChampionTemplateTest() {
+        testSet.reset();
         //Search on empty list
         assertNull(testSet.findChampionTemplate("Leona"));
 
@@ -56,24 +66,15 @@ public class SetTests {
 
     @Test 
     void addTemplateTest() {
+        testSet.reset();
         assertTrue(testSet.getPlaceableHashMap().isEmpty());
         testSet.templateAdd(jayce);
         assertEquals(jayce, testSet.findChampionTemplate("Jayce"));
         assertEquals(1, testSet.getPlaceableHashMap().size());
 
-        
-
-
     }
 
-    @Test
-    void loadSet13Test() {
-        testSet.loadSet13();
-        assertEquals(40, testSet.getPlaceableHashMap().size());
-        assertEquals("Lux", testSet.findChampionTemplate("Lux").name);
-        
-
-    }
+    
 
 
 

@@ -62,7 +62,7 @@ public class MainMenu {
             case 1: {
                 System.out.println("Give your board a name:");
                 String name = reader.nextLine();
-                planner.addBoard(new Set("SetThirteen"), name);
+                planner.addBoard(name);
                 new BoardMenu(planner.getBoard(name));
                 break;
             } case 2: {

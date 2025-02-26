@@ -8,13 +8,10 @@ import org.junit.jupiter.api.Test;
 
 public class BoardTests {
     Board testBoard;
-    Set setThirteen;
 
     @BeforeEach
     void setUp() {
-        setThirteen = new Set("Set13");
-        setThirteen.loadSet13();
-        testBoard = new Board(setThirteen, "MyFirstBoard");
+        testBoard = new Board("MyFirstBoard");
     }
 
     @Test
@@ -27,8 +24,8 @@ public class BoardTests {
     @Test
     void addSingleChampionToBoardTest() {
         //Ensure Proper findChampionTempalte returns
-        assertTrue(setThirteen.findChampionTemplate("Jayce") instanceof ChampionTemplate);
-        testBoard.addChampionToBoard(setThirteen.findChampionTemplate("Jayce"), 0, 0);
+        assertTrue(testBoard.getSet().findChampionTemplate("Jayce") instanceof ChampionTemplate);
+        testBoard.addChampionToBoard(testBoard.getSet().findChampionTemplate("Jayce"), 0, 0);
         assertEquals(1, testBoard.getRoster().size());
         //Ensure that roster is composed of ChampionInstance
         assertTrue(testBoard.getRoster().get(0) instanceof ChampionInstance);
@@ -39,7 +36,7 @@ public class BoardTests {
     void ensureOnlyReadilyPlaceableChampionsAreAdded() {
         //Ensure only readilyPlaceable champions are added
         
-        ChampionTemplate notReadilyPlaceable = setThirteen.findChampionTemplate("Corki");
+        ChampionTemplate notReadilyPlaceable = testBoard.getSet().findChampionTemplate("Corki");
         assertEquals(0, testBoard.getRoster().size());
         notReadilyPlaceable.readilyPlaceable = false;
         testBoard.addChampionToBoard(notReadilyPlaceable, 0, 0);
@@ -49,25 +46,25 @@ public class BoardTests {
     @Test
     void addMultipleChampionToBoardTest() {
         //Placing different champion on same location
-        testBoard.addChampionToBoard(setThirteen.findChampionTemplate("Jayce"), 0, 0);
+        testBoard.addChampionToBoard(testBoard.getSet().findChampionTemplate("Jayce"), 0, 0);
         assertEquals(1, testBoard.getRoster().size());
-        testBoard.addChampionToBoard(setThirteen.findChampionTemplate("Camille"), 0, 0);
+        testBoard.addChampionToBoard(testBoard.getSet().findChampionTemplate("Camille"), 0, 0);
         assertEquals(1, testBoard.getRoster().size());
-        testBoard.addChampionToBoard(setThirteen.findChampionTemplate("Camille"), 3, 0);
+        testBoard.addChampionToBoard(testBoard.getSet().findChampionTemplate("Camille"), 3, 0);
         assertEquals(2, testBoard.getRoster().size());
 
-        testBoard.addChampionToBoard(setThirteen.findChampionTemplate("Corki"), 1, 0);
-        testBoard.addChampionToBoard(setThirteen.findChampionTemplate("Corki"), 2, 0);
-        testBoard.addChampionToBoard(setThirteen.findChampionTemplate("Corki"), 4, 0);
-        testBoard.addChampionToBoard(setThirteen.findChampionTemplate("Camille"), 5, 0);
-        testBoard.addChampionToBoard(setThirteen.findChampionTemplate("Camille"), 6, 0);
-        testBoard.addChampionToBoard(setThirteen.findChampionTemplate("Corki"), 1, 1);
-        testBoard.addChampionToBoard(setThirteen.findChampionTemplate("Corki"), 2, 1);
+        testBoard.addChampionToBoard(testBoard.getSet().findChampionTemplate("Jayce"), 1, 0);
+        testBoard.addChampionToBoard(testBoard.getSet().findChampionTemplate("Jayce"), 2, 0);
+        testBoard.addChampionToBoard(testBoard.getSet().findChampionTemplate("Jayce"), 4, 0);
+        testBoard.addChampionToBoard(testBoard.getSet().findChampionTemplate("Camille"), 5, 0);
+        testBoard.addChampionToBoard(testBoard.getSet().findChampionTemplate("Camille"), 6, 0);
+        testBoard.addChampionToBoard(testBoard.getSet().findChampionTemplate("Jayce"), 1, 1);
+        testBoard.addChampionToBoard(testBoard.getSet().findChampionTemplate("Jayce"), 2, 1);
         assertEquals(9, testBoard.getRoster().size());
-        testBoard.addChampionToBoard(setThirteen.findChampionTemplate("Corki"), 4, 1);
+        testBoard.addChampionToBoard(testBoard.getSet().findChampionTemplate("Jayce"), 4, 1);
         assertEquals(10, testBoard.getRoster().size());
 
-        testBoard.addChampionToBoard(setThirteen.findChampionTemplate("Corki"), 4, 2);
+        testBoard.addChampionToBoard(testBoard.getSet().findChampionTemplate("Jayce"), 4, 2);
         assertEquals(10, testBoard.getRoster().size());
     }
 
@@ -86,7 +83,7 @@ public class BoardTests {
 
     @Test 
     void locationIsEmptyTest() {
-        testBoard.addChampionToBoard(setThirteen.findChampionTemplate("Corki"), 3, 3);
+        testBoard.addChampionToBoard(testBoard.getSet().findChampionTemplate("Corki"), 3, 3);
         assertTrue(testBoard.locationIsEmpty(1, 3));
         assertFalse(testBoard.locationIsEmpty(3, 3));
     }

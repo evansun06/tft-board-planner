@@ -10,18 +10,17 @@ public class Board {
     public static final int yMin = 0;
     public static final int yMax = 3;
     private final int maxRosterSize = 10;
-    private final Set set;
+    private static Set set = new Set("SetThirteen");
 
     private ArrayList<Placeable> roster;
     private ArrayList<Integer> winHistory;
     private String name;
 
 
-    // EFFECT: Creates blank board for a specific Set(version)
+    // EFFECT: Creates blank board for the currentSet.
     //         with an empty roster.  
-    public Board(Set version, String name) {
+    public Board(String name) {
         this.name = name;
-        this.set = version;
         this.roster = new ArrayList<>();
         this.winHistory = new ArrayList<>();
     }

@@ -50,6 +50,7 @@ public class JsonReaderTest {
 
     @Test
     void loadChampionsToSetCorrectAddressTest() {
+        testSet.reset();
         assertNull(testSet.findChampionTemplate("Ambessa"));
 
         try {
