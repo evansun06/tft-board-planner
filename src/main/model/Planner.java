@@ -2,6 +2,8 @@ package model;
 
 import java.util.ArrayList;
 
+import org.json.JSONObject;
+
 // Planner object that holds all the boards for the user
 public class Planner {
     private ArrayList<Board> boardDeck;
@@ -47,6 +49,8 @@ public class Planner {
     public ArrayList<Board> getBoardDeck() {
         return this.boardDeck;
     }
+
+
 
 
     

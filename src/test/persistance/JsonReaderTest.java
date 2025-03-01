@@ -2,11 +2,8 @@ package persistance;
 
 import static org.junit.Assert.*;
 import java.io.IOException;
-import javax.imageio.IIOException;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import model.Set;
 
 // Used parts of JsonSerilizationDemo.JSONReaderTest UBC 210
