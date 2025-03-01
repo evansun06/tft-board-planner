@@ -78,6 +78,7 @@ public class JsonReader {
         set.templateAdd(template);
     }
 
+    // REQUIRES: Json to be properly formatted for a planner
     // EFFECT: reads data at the given address and returns a planner object
     //         throws if invalid relative address
     public Planner plannerJsonToObject() throws IOException{

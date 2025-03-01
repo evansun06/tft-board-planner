@@ -30,8 +30,8 @@ public class JsonWriter {
         writer = new PrintWriter(new File(address));
     }
 
-    // EFFECT: Captures a Planner Object into JSON file at the relative address
-    public void writeToJson() {
+    // EFFECT: write the given json into a file
+    public void writePlannerToFile(Planner p) throws FileNotFoundException {
          
     }
 
