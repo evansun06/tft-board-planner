@@ -1,6 +1,9 @@
 package persistance;
 
+import model.Board;
+import model.ChampionInstance;
 import model.ChampionTemplate;
+import model.Planner;
 import model.Set;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -73,6 +76,24 @@ public class JsonReader {
                 c.getInt("cost")
         );
         set.templateAdd(template);
+    }
+
+    // EFFECT: reads data at the given address and returns a planner object
+    //         throws if invalid relative address
+    public Planner plannerJsonToObject() throws IOException{
+        return null;
+    }
+
+    // REQUIRES: JSONObject be formatted for Board
+    // EFFECT: produces a Board object from a valid JSONObject
+    public Board boardJsonToObject(JSONObject b) {
+        return null;
+    }
+
+    // REQUIRES: JSONObject be formatted for championInstance
+    // EFFECT: produces a championInstance from a valid JSONObject
+    public ChampionInstance championInstanceToObject(JSONObject c) {
+        return null;
     }
 
 

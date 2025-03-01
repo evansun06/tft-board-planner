@@ -27,7 +27,7 @@ public class JsonWriter {
     // EFFECT: opens a file with the given relative address
     //         throws FileNoteFoundException if invalid address.
     public void open(String address) throws FileNotFoundException {
-        
+        writer = new PrintWriter(new File(address));
     }
 
     // EFFECT: Captures a Planner Object into JSON file at the relative address
