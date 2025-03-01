@@ -4,29 +4,32 @@ import static org.junit.Assert.*;
 import java.io.IOException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import model.Board;
+import model.Planner;
 import model.Set;
 
 // Used parts of JsonSerilizationDemo.JSONReaderTest UBC 210
 public class JsonReaderTest {
-    JsonReader reader;
+    JsonReader testReader;
     Set testSet;
 
     @BeforeEach
     void setUp() {
-        reader = new JsonReader("data/setThirteen.json");
+        testReader = new JsonReader("data/setThirteen.json");
         testSet = new Set("String");
     }
 
     @Test
     void constructorTest() {
-        assertEquals("data/setThirteen.json", reader.getAddress());
+        assertEquals("data/setThirteen.json", testReader.getAddress());
     }
 
     @Test
     void readJsonSetFaultyAddressTest() {
-        reader = new JsonReader("data/noSuchThing.json");
+        testReader = new JsonReader("data/noSuchThing.json");
         try {
-            reader.readJson();
+            testReader.readJson();
             fail("exception expected");
         } catch (IOException e) {
             // pass
@@ -35,10 +38,10 @@ public class JsonReaderTest {
 
     @Test
     void readJsonSetCorrectAddressTest() {
-        reader.setAddress("data/setThirteen.json");
+        testReader.setAddress("data/setThirteen.json");
         String json = "";
         try {
-             json = reader.readJson();
+             json = testReader.readJson();
         } catch (IOException e) {
             fail("proper read expected");
         }
@@ -51,7 +54,7 @@ public class JsonReaderTest {
         assertNull(testSet.findChampionTemplate("Ambessa"));
 
         try {
-            reader.loadChampionsToSet(testSet);
+            testReader.loadChampionsToSet(testSet);
         } catch (IOException e) {
             fail("Exception not expected");
         }
@@ -61,7 +64,30 @@ public class JsonReaderTest {
 
     @Test
     void loadPlannerToWrongAddress() {
-        
+        try {
+            testReader.setAddress("dummyAddress");
+            testReader.plannerJsonToObject();
+            fail("Should throw IOException");
+        } catch (IOException e) {
+            // pass
+        }
+    }
+    
+    @Test
+    void loadPlannerCorrectAddress() {
+        Planner retrievedPlanner;
+        Board retrievedBoard;
+        try {
+            testReader.setAddress("data/testPlanner.json");
+            retrievedPlanner = testReader.plannerJsonToObject();
+            assertEquals(2, retrievedPlanner.getBoardDeck().size());
+            retrievedBoard = retrievedPlanner.getBoard("TestBoard");
+            assertTrue(retrievedBoard != null);
+            assertEquals("Jayce", retrievedBoard.getChampionFromBoard(0, 0).getName());
+            assertEquals(1, retrievedBoard.getChampionFromBoard(0, 0).getInstanceId());
+        } catch (Exception e) {
+            fail("should not fail");
+        }
     }
     
     
