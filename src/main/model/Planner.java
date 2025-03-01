@@ -38,7 +38,7 @@ public class Planner {
     //         else return null
     public Board getBoard(String name) {
         for (Board b: boardDeck) {
-            if (b.getName() == name) {
+            if (b.getName().equals(name)) {
                 return b;
             }
         }

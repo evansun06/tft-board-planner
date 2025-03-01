@@ -69,10 +69,8 @@ public class JsonWriter {
     public JSONArray rosterToJson(ArrayList<Placeable> roster) {
         JSONArray rosterJson = new JSONArray();
         for (Placeable p: roster) {
-            if(p instanceof ChampionInstance) {
                 ChampionInstance c = (ChampionInstance) p;
                 rosterJson.put(championInstanceToJson(c));
-            }
         }
         return rosterJson;
     }

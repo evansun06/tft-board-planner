@@ -36,7 +36,7 @@ public class Board {
     //         Else, does nothing.
   
     public void addChampionToBoard(ChampionTemplate champ, int x, int y) {
-        if (champ.readilyPlaceable && roster.size() < maxRosterSize && locationIsEmpty(x, y)) {
+        if ((champ.readilyPlaceable) && (roster.size() < maxRosterSize) && (locationIsEmpty(x, y))) {
             roster.add(new ChampionInstance(champ, x, y));
         }
     }

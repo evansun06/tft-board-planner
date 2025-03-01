@@ -27,6 +27,11 @@ public abstract class Placeable {
         locy = y;
     }
 
+    // EFFECT: set readilyPlaceable
+    public void setReadilyPlaceable(Boolean b) {
+        this.readilyPlaceable = b;
+    }
+
     // getters
     public String getName() {
         return this.name;

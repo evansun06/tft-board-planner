@@ -1,6 +1,8 @@
 package persistance;
 
 import static org.junit.Assert.*;
+
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,9 +24,9 @@ public class JsonWriterTest {
     void faultyAddressTest() {
         JsonWriter writer = new JsonWriter("no address");
         try {
-            writer.open(writer.getAddress());
+            writer.open("./data/my\0illegal:fileName.json");
             fail("Should throw exception");
-        } catch (Exception e) {
+        } catch (FileNotFoundException e) {
             // pass
         }
     }
@@ -57,6 +59,8 @@ public class JsonWriterTest {
         testplanner.addBoard("TestBoard");
         Board testBoard = testplanner.getBoard("TestBoard");
         testBoard.addChampionToBoard(testBoard.getSet().findChampionTemplate("Jayce"), 0, 0);
+        testBoard.addToHistory(1);
+        testBoard.addToHistory(2);
 
         //Test
         assertEquals("data/test.json", writer.getAddress());
@@ -75,6 +79,7 @@ public class JsonWriterTest {
             ChampionInstance retrievedJayce = retrievedBoard.getChampionFromBoard(0, 0);
             assertEquals("Jayce", retrievedJayce.getName());
             assertEquals(0, retrievedJayce.getAbilityPower());
+            assertEquals(2,retrievedBoard.getWinHistory().size());
             
         } catch (Exception e) {
             fail("shouldReadProperly");

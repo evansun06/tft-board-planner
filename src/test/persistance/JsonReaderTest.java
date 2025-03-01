@@ -80,11 +80,14 @@ public class JsonReaderTest {
         try {
             testReader.setAddress("data/testPlanner.json");
             retrievedPlanner = testReader.plannerJsonToObject();
-            assertEquals(2, retrievedPlanner.getBoardDeck().size());
+            assertEquals(1, retrievedPlanner.getBoardDeck().size());
             retrievedBoard = retrievedPlanner.getBoard("TestBoard");
+            
             assertTrue(retrievedBoard != null);
+            assertEquals(2, retrievedBoard.getRoster().size());
             assertEquals("Jayce", retrievedBoard.getChampionFromBoard(0, 0).getName());
-            assertEquals(1, retrievedBoard.getChampionFromBoard(0, 0).getInstanceId());
+            assertEquals(2, retrievedBoard.getWinHistory().size());
+            
         } catch (Exception e) {
             fail("should not fail");
         }

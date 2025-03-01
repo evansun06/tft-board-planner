@@ -82,20 +82,40 @@ public class JsonReader {
     // EFFECT: reads data at the given address and returns a planner object
     //         throws if invalid relative address
     public Planner plannerJsonToObject() throws IOException{
-        return null;
+        Planner retrievedPlanner = new Planner();
+        String stringJson = readJson();
+        JSONObject plannerJson = new JSONObject(stringJson);
+        JSONArray boardDeckJson = plannerJson.getJSONArray("boardDeck");
+
+        for (Object board: boardDeckJson) {
+            JSONObject boardJson = (JSONObject) board;
+            retrievedPlanner.getBoardDeck().add(boardJsonToObject(boardJson));
+        }
+        return retrievedPlanner;
     }
 
     // REQUIRES: JSONObject be formatted for Board
     // EFFECT: produces a Board object from a valid JSONObject
     public Board boardJsonToObject(JSONObject b) {
-        return null;
+        Board retrievedBoard = new Board(b.getString("name"));
+        JSONArray rosterJson = b.getJSONArray("roster");
+        JSONArray historyJson = b.getJSONArray("history");
+        
+        for(Object champ: rosterJson) {
+            JSONObject champJson = (JSONObject) champ;
+            String champName = champJson.getString("name");
+            ChampionTemplate template = retrievedBoard.getSet().findChampionTemplate(champName);
+            template.setReadilyPlaceable(true);
+            int x = champJson.getInt("x");
+            int y = champJson.getInt("y");
+            retrievedBoard.addChampionToBoard(template, x, y);
+        }
+        for (int i = 0; i < historyJson.length(); i++) {
+            retrievedBoard.addToHistory(historyJson.getInt(i));
+        }
+        return retrievedBoard;
     }
 
-    // REQUIRES: JSONObject be formatted for championInstance
-    // EFFECT: produces a championInstance from a valid JSONObject
-    public ChampionInstance championInstanceToObject(JSONObject c) {
-        return null;
-    }
 
 
     // EFFECT: changes address
