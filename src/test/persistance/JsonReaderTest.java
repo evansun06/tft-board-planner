@@ -8,25 +8,25 @@ import model.Set;
 
 // Used parts of JsonSerilizationDemo.JSONReaderTest UBC 210
 public class JsonReaderTest {
-    JsonReader testSetLoader;
+    JsonReader reader;
     Set testSet;
 
     @BeforeEach
     void setUp() {
-        testSetLoader = new JsonReader("data/setThirteen.json");
+        reader = new JsonReader("data/setThirteen.json");
         testSet = new Set("String");
     }
 
     @Test
     void constructorTest() {
-        assertEquals("data/setThirteen.json", testSetLoader.getAddress());
+        assertEquals("data/setThirteen.json", reader.getAddress());
     }
 
     @Test
     void readJsonSetFaultyAddressTest() {
-        testSetLoader = new JsonReader("data/noSuchThing.json");
+        reader = new JsonReader("data/noSuchThing.json");
         try {
-            testSetLoader.readJson();
+            reader.readJson();
             fail("exception expected");
         } catch (IOException e) {
             // pass
@@ -35,10 +35,10 @@ public class JsonReaderTest {
 
     @Test
     void readJsonSetCorrectAddressTest() {
-        testSetLoader.setAddress("data/setThirteen.json");
+        reader.setAddress("data/setThirteen.json");
         String json = "";
         try {
-             json = testSetLoader.readJson();
+             json = reader.readJson();
         } catch (IOException e) {
             fail("proper read expected");
         }
@@ -51,7 +51,7 @@ public class JsonReaderTest {
         assertNull(testSet.findChampionTemplate("Ambessa"));
 
         try {
-            testSetLoader.loadChampionsToSet(testSet);
+            reader.loadChampionsToSet(testSet);
         } catch (IOException e) {
             fail("Exception not expected");
         }
@@ -59,7 +59,10 @@ public class JsonReaderTest {
         assertEquals(1100, testSet.findChampionTemplate("Ambessa").getHealth());
     }
 
-
+    @Test
+    void loadPlannerToWrongAddress() {
+        
+    }
     
     
 

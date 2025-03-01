@@ -34,7 +34,10 @@ public class JsonWriter {
 
     // EFFECT: write the given json into a file
     public void writePlannerToFile(Planner p) throws FileNotFoundException {
-         
+        open("data/test.json");
+        JSONObject plannerJson = plannerToJson(p);
+        writer.print(plannerJson.toString(TAB));
+        writer.close();
     }
 
     // EFFECT: returns a json object of a planner
@@ -66,21 +69,32 @@ public class JsonWriter {
     public JSONArray rosterToJson(ArrayList<Placeable> roster) {
         JSONArray rosterJson = new JSONArray();
         for (Placeable p: roster) {
-            ChampionInstance c = (ChampionInstance) p;
-            rosterJson.put(championInstanceToJson(c));
+            if(p instanceof ChampionInstance) {
+                ChampionInstance c = (ChampionInstance) p;
+                rosterJson.put(championInstanceToJson(c));
+            }
         }
         return rosterJson;
     }
 
     // EFFECT: returns a Json Object of a Champion instance
     public JSONObject championInstanceToJson(ChampionInstance c) {
-        // ENDED HERE START FROM HERE AHDIOEHFIOAFHAEIHFAO
-        return null;
+        JSONObject champJson = new JSONObject();
+        champJson.put("name", c.getName());
+        champJson.put("instanceId", c.getInstanceId());
+        champJson.put("nextId", c.getNextId());
+        champJson.put("x", c.getX());
+        champJson.put("y", c.getY());
+        return champJson;
     }
 
     //EFFECT: returns a Json Array of a boards win history
     public JSONArray winHistoryToJson(ArrayList<Integer> history) {
-        return null;
+        JSONArray historyJson = new JSONArray();
+        for (Integer i: history) {
+            historyJson.put(i);
+        }
+        return historyJson;
     }
 
     // GETTERS
