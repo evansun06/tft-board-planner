@@ -22,7 +22,7 @@ public class Set {
         try {
             reader.loadChampionsToSet(this);
         } catch (IOException e) {
-            fail("unexpected exception");
+            e.printStackTrace();
         }
     }
 

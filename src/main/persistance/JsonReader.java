@@ -52,8 +52,6 @@ public class JsonReader {
         }
         for (Object championJson: championJsonArray) {
             JSONObject champ = (JSONObject) championJson;
-
-
             addChampion(set, champ);
         }
     }

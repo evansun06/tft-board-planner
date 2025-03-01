@@ -27,9 +27,8 @@ public class SetTests {
 
     @Test 
     void constructorTestForceIOException() {
-        assertThrows(AssertionError.class, () -> {
-        new Set("ForceException");
-    });
+        Set forceThrowSet = new Set("ForceException");
+        assertNull(forceThrowSet.findChampionTemplate("Jayce"));
 
     }
 
