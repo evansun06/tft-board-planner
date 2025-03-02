@@ -49,6 +49,7 @@ public class JsonWriterTest {
     }
 
     @Test
+    @SuppressWarnings("methodlength")
     void correctAddressNonEmptyPlannerToFile() {
         //Set Up
         JsonWriter writer = new JsonWriter("data/test.json");

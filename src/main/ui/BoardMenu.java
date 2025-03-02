@@ -60,8 +60,7 @@ public class BoardMenu {
     // MODIFIES: this
     // EFFECTS: collect option and run consequent functions
     public void recieveBoardOptions() {
-        int option = Integer.parseInt(reader.nextLine());
-        
+        int option = recieveInput();
         switch (option) {
             case 1: {
                 System.out.println("Please input the exact name of the Champion");
@@ -84,6 +83,17 @@ public class BoardMenu {
                 recieveBoardOptions();
             }
         }
+    }
+
+    // EFFECTS: handle user input for options, if invalid option, prompt again.
+    public int recieveInput() {
+        int option = 0;
+        try {
+            option = Integer.parseInt(reader.nextLine());
+        } catch (Exception e) {
+            return 0;
+        }
+        return option;
     }
 
     // EFFECT: Prompts "are you sure?" if user agrees, deletes the board.

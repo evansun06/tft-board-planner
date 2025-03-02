@@ -83,7 +83,7 @@ public class MainMenu {
     // EFFECT: recieves a option for the above selections.
     //         else prompts user to try again
     private void recieveSurfaceOption() {
-        int option = Integer.parseInt(reader.nextLine());
+        int option = recieveInput();
         
         switch (option) {
             case 1: {
@@ -124,7 +124,19 @@ public class MainMenu {
         }  
     }
 
+    // EFFECTS: handle user input for options, if invalid option, prompt again.
+    public int recieveInput() {
+        int option = 0;
+        try {
+            option = Integer.parseInt(reader.nextLine());
+        } catch (Exception e) {
+            return 0;
+        }
+        return option;
+    }
+
     public static void main(String[] args) throws Exception {
         new MainMenu();
     }
+
 }
