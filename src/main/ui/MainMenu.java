@@ -26,10 +26,6 @@ public class MainMenu {
         } catch (IOException e) {
             e.printStackTrace();
         } 
-        
-
-        
-
     }
 
     // EFFECT: Prompts user on start up to load previous session
@@ -125,8 +121,7 @@ public class MainMenu {
         } catch (Exception e) {
             System.out.println("Try again");
             editBoard();
-        }
-        
+        }  
     }
 
     public static void main(String[] args) throws Exception {
