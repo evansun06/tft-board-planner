@@ -81,7 +81,7 @@ public class JsonReader {
     // REQUIRES: Json to be properly formatted for a planner
     // EFFECT: reads data at the given address and returns a planner object
     //         throws if invalid relative address
-    public Planner plannerJsonToObject() throws IOException{
+    public Planner plannerJsonToObject() throws IOException {
         Planner retrievedPlanner = new Planner();
         String stringJson = readJson();
         JSONObject plannerJson = new JSONObject(stringJson);
@@ -101,7 +101,7 @@ public class JsonReader {
         JSONArray rosterJson = b.getJSONArray("roster");
         JSONArray historyJson = b.getJSONArray("history");
         
-        for(Object champ: rosterJson) {
+        for (Object champ: rosterJson) {
             JSONObject champJson = (JSONObject) champ;
             String champName = champJson.getString("name");
             ChampionTemplate template = retrievedBoard.getSet().findChampionTemplate(champName);

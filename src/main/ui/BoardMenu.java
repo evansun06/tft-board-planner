@@ -8,6 +8,7 @@ import model.*;
 public class BoardMenu {
     private Scanner reader  = new Scanner(System.in);
     private Board board;
+    private Planner owner;
     private Boolean leaveMenu;
 
     // EFFECTS: - Connect the board to the menu
@@ -15,8 +16,9 @@ public class BoardMenu {
     //            also instantiate the shared set.
     //          - Displays the board
     //         
-    public BoardMenu(Board b) {
+    public BoardMenu(Board b, Planner p) {
         this.board = b;
+        this.owner = p;
         this.leaveMenu = false;
         do {
             displayBoard();
@@ -72,12 +74,31 @@ public class BoardMenu {
                 updateMatchHistory();
                 break;
             } case 4: {
+                handleBoardDelete();
+                break;
+            } case 5: {
                 leaveMenu = true;
                 break;
             } default: {
                 System.out.println("Invalid option. Please try again.");
                 recieveBoardOptions();
             }
+        }
+    }
+
+    // EFFECT: Prompts "are you sure?" if user agrees, deletes the board.
+    public void handleBoardDelete() {
+        System.out.println("Are you sure you want to delete this board?");
+        System.out.println("Yes/No");
+        String option = reader.nextLine().toLowerCase();
+        if (option.equals("yes")) {
+            this.owner.removeBoard(this.board.getName());
+            this.leaveMenu = true;
+        } else if (option.equals("no")) {
+            return;
+        } else {
+            System.out.println("Invalid response: Try Again");
+            handleBoardDelete();
         }
     }
 
@@ -106,7 +127,8 @@ public class BoardMenu {
         System.out.println("1. Add champion to board");
         System.out.println("2. Remove a champion from board");
         System.out.println("3. Update placement history");
-        System.out.println("4. Return to main menu");
+        System.out.println("4. Delete board");
+        System.out.println("5. Return to main menu");
     }
 
 
@@ -175,4 +197,6 @@ public class BoardMenu {
         }
         board.removeChampionFromRoster(x, y);
     }
+
+
 }

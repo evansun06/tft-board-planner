@@ -1,9 +1,6 @@
 package model;
 
 import static org.junit.Assert.*;
-
-import java.io.IOException;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

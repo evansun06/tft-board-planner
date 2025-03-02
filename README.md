@@ -32,9 +32,9 @@ learn would be interesting.
 
 _Phase 2:_
 
-User Request 7: As a user, I want the option to save or not to save a board, additionally, when I exit a board, I want to be prompted to save.
+User Request 7: As a user, I want boards to autosave, but have the option to delete a board.
 
-User Request 8: As a user, I want to be able to load and work on previous boards from application startup.
+User Request 8: As a user, I want to have the option to load and work on previous boards from application startup.
 
 
 

@@ -34,7 +34,7 @@ public class JsonWriter {
 
     // EFFECT: write the given json into a file
     public void writePlannerToFile(Planner p) throws FileNotFoundException {
-        open("data/test.json");
+        open(address);
         JSONObject plannerJson = plannerToJson(p);
         writer.print(plannerJson.toString(TAB));
         writer.close();
@@ -69,8 +69,8 @@ public class JsonWriter {
     public JSONArray rosterToJson(ArrayList<Placeable> roster) {
         JSONArray rosterJson = new JSONArray();
         for (Placeable p: roster) {
-                ChampionInstance c = (ChampionInstance) p;
-                rosterJson.put(championInstanceToJson(c));
+            ChampionInstance c = (ChampionInstance) p;
+            rosterJson.put(championInstanceToJson(c));
         }
         return rosterJson;
     }

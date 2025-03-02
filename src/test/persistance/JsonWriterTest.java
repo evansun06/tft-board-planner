@@ -3,14 +3,11 @@ package persistance;
 import static org.junit.Assert.*;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import model.Board;
 import model.ChampionInstance;
 import model.Planner;
-import model.Set;
+
 
 public class JsonWriterTest {
     
@@ -51,7 +48,7 @@ public class JsonWriterTest {
         }
     }
 
-    @Test 
+    @Test
     void correctAddressNonEmptyPlannerToFile() {
         //Set Up
         JsonWriter writer = new JsonWriter("data/test.json");
@@ -61,8 +58,6 @@ public class JsonWriterTest {
         testBoard.addChampionToBoard(testBoard.getSet().findChampionTemplate("Jayce"), 0, 0);
         testBoard.addToHistory(1);
         testBoard.addToHistory(2);
-
-        //Test
         assertEquals("data/test.json", writer.getAddress());
         try {
             writer.writePlannerToFile(testplanner);
@@ -79,8 +74,7 @@ public class JsonWriterTest {
             ChampionInstance retrievedJayce = retrievedBoard.getChampionFromBoard(0, 0);
             assertEquals("Jayce", retrievedJayce.getName());
             assertEquals(0, retrievedJayce.getAbilityPower());
-            assertEquals(2,retrievedBoard.getWinHistory().size());
-            
+            assertEquals(2,retrievedBoard.getWinHistory().size());   
         } catch (Exception e) {
             fail("shouldReadProperly");
         }
