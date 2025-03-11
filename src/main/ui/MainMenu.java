@@ -13,6 +13,7 @@ public class MainMenu {
     private Planner planner;
     private JsonReader jsonReader = new JsonReader("data/userPersistance.json");
     private JsonWriter jsonWriter = new JsonWriter("data/userPersistance.json");
+
     
     // EFFECT: opens main menue
     public MainMenu() {

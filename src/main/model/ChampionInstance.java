@@ -8,7 +8,7 @@ import exceptions.InvalidLocationException;
 public class ChampionInstance extends ChampionTemplate {
     private int instanceId;
     private static int nextId = 1;
-
+    
     // REQUIRES: Valid champion template within a set.
     // MODIFIES: this
     // EFFECTS: Creats a new base instance of a champion according to its template.
@@ -26,7 +26,7 @@ public class ChampionInstance extends ChampionTemplate {
         this.instanceId = nextId;
         nextId++;
     }
-
+    
     // MODIFIES: this
     // EFFECT: Resets the universal instance Id
     public void resetInstanceId() {
