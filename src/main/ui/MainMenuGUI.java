@@ -5,56 +5,88 @@ import javax.swing.*;
 import persistance.JsonReader;
 import model.*;
 
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Window;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 
 
 // MainMenuGUI is the graphical interface that users are first introduced to
 //
-public class MainMenuGUI extends JFrame { 
+public class MainMenuGUI implements ActionListener { 
+    private JFrame mainMenuJFrame;
+    private JLayeredPane mainMenuLayers;
+    private Container contentPane;
+
+    private JPanel optionPanel;
+    private JPanel boardPanel;
     protected Planner planner;
     private JsonReader jsonReader = new JsonReader("data/userPersistance.json");
-    private JDesktopPane desktopPane;
-
-
+    private JInternalFrame popup;
+    
+    
 
     // EFFECT: constructor that sets the size and attribuites of the Jframe.
     public MainMenuGUI() {
-        super("Main Menu");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1000,800);
-        desktopPane = new JDesktopPane();
-        this.add(desktopPane);
+        mainMenuJFrame = new JFrame();
+        configureMainJFrame();
+        setMainMenuComponents();
+        mainMenuJFrame.setVisible(true);
         promptSessionRecovery();
-        this.setVisible(true);
-
-    }
-
-    // EFFECTS: Prepares the labels and options of the main menue.
-    public void setMainMenuComponents() {
         
     }
+    //EFFECT: Configure MainJFrame with according dimensions
+    public void configureMainJFrame() {
+        mainMenuJFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainMenuJFrame.setSize(1000, 800);
+        mainMenuJFrame.setLayout(null);
+        mainMenuLayers = mainMenuJFrame.getLayeredPane();
+        contentPane = mainMenuJFrame.getContentPane();
+    }
+
+    // REQUIRES: should only be called from MainMenuGUI constructor
+    // EFFECTS: Prepares the labels and options of the main menu.
+    private void setMainMenuComponents() {
+        optionPanel = new JPanel();
+        boardPanel = new JPanel();
+        optionPanel.setBounds(0,0,200,800);
+        boardPanel.setBounds(200,0,800,800);
+        optionPanel.setBackground(Color.BLUE);
+        boardPanel.setBackground(Color.GRAY);
+        contentPane.add(optionPanel);
+        contentPane.add(boardPanel);
+        
+    }
+
 
     // EFFECTS: Display a pop-up a tab that asks the user if they want to recover the previous session.
     //          Will not let user continue unless a descision is made.
     public void promptSessionRecovery() {
-        JInternalFrame popup = new JInternalFrame("Session Recovery", true, false, false, false);
+        // Center & Make Popup as JInternalFrame
+        popup = new JInternalFrame("Session Recovery", true, false, false, false);
         popup.setSize(500,200);
         popup.setLayout(null);
-
-        desktopPane.add(popup);
-        
+        popup.setLocation((mainMenuJFrame.getWidth()/2 - popup.getWidth()/2),
+                (mainMenuJFrame.getHeight()/2 - popup.getHeight()/2));
         popup.setResizable(false);
+
+        //Make Label
         JLabel prompt = new JLabel("Do you want to recover your previous session?");
-        prompt.setBounds(100, 50,300,30);
+        prompt.setSize(300,30);
+        prompt.setLocation(100,30);
         popup.add(prompt);
 
-        addSessionRecoveryButtons(popup);
-        //Dynamically Center
-        popup.setLocation((this.getWidth() / 2 - popup.getWidth() / 2),
-                (this.getHeight() / 2 - popup.getHeight() / 2));
+        addSessionRecoveryButtons(popup); // Add buttons from helper.
+        
+        //Add the popup to the POPUP_LAYER
+        mainMenuLayers.add(popup, JLayeredPane.POPUP_LAYER);
         popup.setVisible(true);
+        popup.moveToFront();
     }
     
     //REQUIRES: The exact JInternalFrame used for session recovery needs to be passed
@@ -109,6 +141,11 @@ public class MainMenuGUI extends JFrame {
     
     public static void main(String[] args) {
         new MainMenuGUI();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        
     }
 
 }

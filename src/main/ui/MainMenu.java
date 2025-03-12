@@ -77,7 +77,6 @@ public class MainMenu {
         System.out.println("1. Create a new board");
         System.out.println("2. Edit a board");
         System.out.println("3. Quit program");
-
     }
 
     // MODIFIES: this
