@@ -1,10 +1,6 @@
 package persistance;
 
-import model.Board;
-import model.ChampionInstance;
-import model.ChampionTemplate;
-import model.Planner;
-import model.Set;
+import model.*;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;

@@ -19,32 +19,46 @@ import java.io.IOException;
 // MainMenuGUI is the graphical interface that users are first introduced to
 //
 public class MainMenuGUI implements ActionListener { 
+    // Aesthetic Constants
+    public final Color dark = Color.decode("#1A1423");
+    public final Color comp1 = Color.decode("#4A505E");
+    public final Color comp2 = Color.decode("#7A8B99");
+
+    // MainMenuGUI JFrame Layers
     private JFrame mainMenuJFrame;
     private JLayeredPane mainMenuLayers;
     private Container contentPane;
 
+    // OptioPanel Components
     private JPanel optionPanel;
-    private JPanel boardPanel;
-    protected Planner planner;
-    private JsonReader jsonReader = new JsonReader("data/userPersistance.json");
+    private JButton addBoardButton;
     private JInternalFrame popup;
-    
+    private JPanel boardPanel;
+
+    //Persistance
+    private JsonReader jsonReader = new JsonReader("data/userPersistance.json");
+
+    //Application State
+    protected Planner planner;
     
 
     // EFFECT: constructor that sets the size and attribuites of the Jframe.
     public MainMenuGUI() {
-        mainMenuJFrame = new JFrame();
+        mainMenuJFrame = new DefaultFrame("TFT Board Planner");
         configureMainJFrame();
+        promptSessionRecovery();
         setMainMenuComponents();
         mainMenuJFrame.setVisible(true);
-        promptSessionRecovery();
+        
         
     }
+
     //EFFECT: Configure MainJFrame with according dimensions
     public void configureMainJFrame() {
-        mainMenuJFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainMenuJFrame.setSize(1000, 800);
-        mainMenuJFrame.setLayout(null);
+        // mainMenuJFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // mainMenuJFrame.setSize(1000, 800);
+        // mainMenuJFrame.setLayout(null);
+        // mainMenuJFrame.setResizable(false);
         mainMenuLayers = mainMenuJFrame.getLayeredPane();
         contentPane = mainMenuJFrame.getContentPane();
     }
@@ -53,34 +67,34 @@ public class MainMenuGUI implements ActionListener {
     // EFFECTS: Prepares the labels and options of the main menu.
     private void setMainMenuComponents() {
         optionPanel = new JPanel();
+        optionPanel.setLayout(null);
         boardPanel = new JPanel();
         optionPanel.setBounds(0,0,200,800);
         boardPanel.setBounds(200,0,800,800);
-        optionPanel.setBackground(Color.BLUE);
-        boardPanel.setBackground(Color.GRAY);
+        optionPanel.setBackground(dark);
+        setMenuBarComponents();
+        boardPanel.setBackground(comp1);
         contentPane.add(optionPanel);
         contentPane.add(boardPanel);
         
+    }
+
+    // EFFECT: Adds buttons components to the menu bar component
+    public void setMenuBarComponents() {
+        addBoardButton = new JButton();
+        addBoardButton.setSize(150,50);
+        addBoardButton.setLocation(25,700);
+        addBoardButton.setText("New Board");
+        addBoardButton.addActionListener(this);
+        optionPanel.add(addBoardButton);
+
     }
 
 
     // EFFECTS: Display a pop-up a tab that asks the user if they want to recover the previous session.
     //          Will not let user continue unless a descision is made.
     public void promptSessionRecovery() {
-        // Center & Make Popup as JInternalFrame
-        popup = new JInternalFrame("Session Recovery", true, false, false, false);
-        popup.setSize(500,200);
-        popup.setLayout(null);
-        popup.setLocation((mainMenuJFrame.getWidth()/2 - popup.getWidth()/2),
-                (mainMenuJFrame.getHeight()/2 - popup.getHeight()/2));
-        popup.setResizable(false);
-
-        //Make Label
-        JLabel prompt = new JLabel("Do you want to recover your previous session?");
-        prompt.setSize(300,30);
-        prompt.setLocation(100,30);
-        popup.add(prompt);
-
+        popup = new SessionRecoveryPopup();
         addSessionRecoveryButtons(popup); // Add buttons from helper.
         
         //Add the popup to the POPUP_LAYER
@@ -94,6 +108,8 @@ public class MainMenuGUI implements ActionListener {
     public void addSessionRecoveryButtons(JInternalFrame recoveryPopup) {
         JButton yes = new JButton("Yes");
         JButton no = new JButton("No");
+        yes.setBackground(comp1);
+        no.setBackground(comp1);
         yes.setBounds(140, 100, 100, 30);
         no.setBounds(260, 100, 100, 30);
         recoveryPopup.add(yes);
@@ -136,16 +152,21 @@ public class MainMenuGUI implements ActionListener {
             e.printStackTrace();
         }
     }
-
-
     
-    public static void main(String[] args) {
-        new MainMenuGUI();
-    }
+    //
+    
 
     @Override
+    // EFFECT: Customize functions as a result of different actions
+    // 1. Create new board when the AddNewBoard button gets triggered
     public void actionPerformed(ActionEvent e) {
-        
+        if(e.getSource() == addBoardButton) {
+            
+        }
+    }
+
+    public static void main(String[] args) {
+        new MainMenuGUI();
     }
 
 }

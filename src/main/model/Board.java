@@ -89,7 +89,7 @@ public class Board {
     }
 
     public Set getSet() {
-        return this.set;
+        return set;
     }
 
     public String getName() {

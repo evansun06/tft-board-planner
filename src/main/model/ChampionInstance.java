@@ -1,6 +1,6 @@
 package model;
 
-import exceptions.InvalidLocationException;
+
 
 
 // ChampionInstance is an extension of Champion that will represent a champion
