@@ -82,7 +82,7 @@ public class Board {
         }
         return null;
     }
-
+ 
     // Getters
     public ArrayList<Placeable> getRoster() {
         return this.roster;
