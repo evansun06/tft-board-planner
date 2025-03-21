@@ -85,7 +85,7 @@ public class MainMenuGUI implements ActionListener {
         boardPanel.removeAll();
         boardPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         boardPanel.setBounds(200,0,800,800);
-        displayBoardDeck();
+            displayBoardDeck();
         
     }
 
@@ -121,6 +121,15 @@ public class MainMenuGUI implements ActionListener {
     public void displayBoardDeck() {
         for(Board b: planner.getBoardDeck()) {
             JButton boardButton = new JButton(b.getName());
+            boardButton.addMouseListener(new MouseAdapter() {
+                @Override
+                // EFFECT: When the button for a board is clicked, open the board menu associated
+                public void mouseClicked(MouseEvent e) {
+                    if (e.getButton() == MouseEvent.BUTTON1) {
+                        mainToBoardSwitch(b);
+                    }
+                }
+            }); 
             boardButton.setPreferredSize(new Dimension(750, 50));
             addMouseListenerForBoardButton(boardButton);
             boardPanel.add(boardButton);
@@ -219,6 +228,8 @@ public class MainMenuGUI implements ActionListener {
     public void mainToBoardSwitch(Board b) {
         BoardMenuGUI boardMenuGUI = new BoardMenuGUI(this, b);
         this.hide();
+        mainMenuJFrame.setAlwaysOnTop(false);
+        boardMenuGUI.setLocation(mainMenuJFrame.getX(), mainMenuJFrame.getY());
         boardMenuGUI.show();
     }
 
@@ -237,6 +248,12 @@ public class MainMenuGUI implements ActionListener {
         this.isMakingBoard = b;
     }
 
+    // EFFECT: Set location of the MainMenu Jframe
+    public void setLocation(int x, int y) {
+        mainMenuJFrame.setLocation(x, y);
+    }
+    
+
     
 
     @Override
@@ -250,6 +267,7 @@ public class MainMenuGUI implements ActionListener {
             }
         } 
     }
+
 
     public static void main(String[] args) {
         new MainMenuGUI();
