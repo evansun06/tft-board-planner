@@ -59,11 +59,7 @@ public class BoardMenuGUI {
         configureCornerMenu();
         configureChampionDisplay();
         bindEsc();
-        if (!board.getRoster().isEmpty()) {
-            //TODO: ADD a display method that considers the champions in the board.
-        } else {
-            configureBoardDisplay(); 
-        }
+        configureBoardDisplay();
         
         
         configureWindowListener(main); //Show = TRUE
@@ -210,10 +206,7 @@ public class BoardMenuGUI {
         int dy = (3 * Hex.HEXRADIUS)/2 + gap;
         for (int yy = 0; yy < 4; yy++) {
             for (int xx = 0; xx < 7; xx++) {
-                Hex newHex = new Hex(x, y);
-                configureHexListeners(newHex);
-                boardDisplayPanel.add(newHex);
-                hexBoard[xx][yy] = newHex;
+                configureHex(x, y, xx, yy);                
                 x += dx;
             }
             if (yy % 2 == 0) {
@@ -225,10 +218,37 @@ public class BoardMenuGUI {
         }
     }
 
-
+    // EFFECT: Configure hex depending on the status of the board (APP STATE)
+    public void configureHex(int x, int y, int xx, int yy) {
+        if (board.getChampionFromBoard(xx, yy) == null) { // No Champion
+            Hex newHex = new Hex(x, y, xx, yy);
+            configureHexListeners(newHex);
+            hexBoard[xx][yy] = newHex;
+            boardDisplayPanel.add(newHex);
+        } else {
+            Hex championHex = new Hex(x, y, xx, yy);
+            hexBoard[xx][yy] = championHex;
+            championHex.assignChampion(board.getChampionFromBoard(xx, yy));
+            boardDisplayPanel.add(championHex);
+            configureHexListeners(championHex);
+        } 
+    }
     // EFFECT: Create action listeners that allow the assignment, swap, and removal of champions on the roster.
     public void configureHexListeners(Hex hex) {
-        // TODO: Create Mouslisteners
+        hex.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    if (selectedChampion != null) {
+                        
+                        hex.assignChampion(selectedChampion);
+                        board.addChampionToBoard(selectedChampion, hex.getHexX(), hex.getHexY());
+                        selectedChampion = null;
+                        unhighlightHexes();
+                    }
+                }
+            }
+        });
     }
 
     public void bindEsc() {
@@ -259,9 +279,14 @@ public class BoardMenuGUI {
     }
     // REQUIRES: The double array of hexes
     public void unhighlightHexes() {
-        for (int y = 0; y < 4; y++) {
-            for (int x = 0; x < 7; x++) {
-                hexBoard[x][y].unhighlight();
+        for (int yy = 0; yy < 4; yy++) {
+            for (int xx = 0; xx < 7; xx++) {
+                if (board.getChampionFromBoard(xx, yy) == null) {
+                    hexBoard[xx][yy].unhighlight();
+                } else {
+                    hexBoard[xx][yy].displayChampion();
+                }
+                
             }
         }
     }

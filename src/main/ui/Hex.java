@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
@@ -16,6 +17,7 @@ import model.ChampionTemplate;
 //The Hex Class also contains the respective champion assigned to it
 public class Hex extends JPanel {
     private ChampionInstance championOnRoster;
+    // Coordinate for board
     private int hexX;
     private int hexY;
     
@@ -25,10 +27,11 @@ public class Hex extends JPanel {
     private JLabel champLabel;
 
     // EFFECT: Constructor
-    public Hex(int x, int y) {
+    public Hex(int x, int y, int xx, int yy) {
         super();
-        hexX = x;
-        hexY = y;
+        this.setLayout(null);
+        hexX = xx;
+        hexY = yy;
         rimColor = Color.RED;
         fillColor = MainMenuGUI.DARK;
         configureChampLabel();
@@ -98,18 +101,19 @@ public class Hex extends JPanel {
     // REQUIRES: Champion to be assigned to this hex
     // EFFECT: Changes the fill color according to the champion assigned
     protected void displayChampion() {
-        fillColor = BoardMenuGUI.COSTCOLORS.get(championOnRoster.getCost());
-        champLabel.setText(championOnRoster.getName());
-        champLabel.setVisible(true);
-        this.repaint();
-        
+        if (championOnRoster != null) {
+            fillColor = BoardMenuGUI.COSTCOLORS.get(championOnRoster.getCost());
+            rimColor = Color.WHITE;
+            champLabel.setText(championOnRoster.getName());
+            champLabel.setVisible(true);
+            this.repaint();
+        }    
     }
 
     // EFFECT: Create a champ label
     protected void configureChampLabel() {
         champLabel = new JLabel();
-        champLabel.setBounds(HEXRADIUS, 30, 100, 20);
-        champLabel.setVisible(false);
+        champLabel.setBounds(42, 45,100, 20);
         this.add(champLabel);
     }
 
@@ -123,10 +127,20 @@ public class Hex extends JPanel {
     }
 
     // EFFECT: Assign champion to this board hex specifically a NEW instance
-    protected void assigneChampion(ChampionTemplate template, int x, int y) {
-        this.championOnRoster = new ChampionInstance(template, x, y);
+    protected void assignChampion(ChampionTemplate template) {
+        championOnRoster = new ChampionInstance(template, hexX, hexY);
         displayChampion();
     }
+
+    // GETTERS
+    public int getHexX() {
+        return hexX;
+    }
+
+    public int getHexY() {
+        return hexY;
+    }
+    
 
 
     
