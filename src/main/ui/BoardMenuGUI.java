@@ -1,15 +1,13 @@
 package ui;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
+
 
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.HashMap;
+
 
 import model.Board;
 import model.ChampionTemplate;
@@ -21,6 +19,9 @@ import model.Set;
 public class BoardMenuGUI {
     // Application State
     private Board board;
+    
+    // Parent
+    private MainMenuGUI mainMenu;
 
     // Aesthetic Assets
     public final static Map<Integer, Color> COSTCOLORS = Map.of(
@@ -39,16 +40,17 @@ public class BoardMenuGUI {
     // JFrame Components
     private JPanel boardDisplayPanel;
     private JPanel selectChampionPanel;
-    private JPanel deleteBoardPanel;
+    private JPanel cornerMenuPanel;
     private JScrollPane scrollPane;
 
     // EFFECT: Create new board menu
     public BoardMenuGUI(MainMenuGUI main, Board b) {
+        this.mainMenu = main;
         this.board = b;
         boardMenuJFrame = new DefaultFrame(b.getName());
         boardMenuJFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         configureLayers();
-        configureDelete();
+        configureCornerMenu();
         configureChampionDisplay();
         configureWindowListener(main); //Show = TRUE
         
@@ -60,21 +62,66 @@ public class BoardMenuGUI {
             @Override
             public void windowClosed(WindowEvent e) {
                 main.refreshBoards();
-                main.show();
                 main.setLocation(boardMenuJFrame.getX(), boardMenuJFrame.getY());
+                main.show();
                 boardMenuJFrame.dispose();
             }
         });
     }
 
     // EFFECT: Create a corner JPanel with the option to delete the board.
-    public void configureDelete() {
-        deleteBoardPanel = new JPanel();
-        deleteBoardPanel.setLayout(null);
-        deleteBoardPanel.setBounds(0, 600, 200, 200);
-        deleteBoardPanel.setBackground(MainMenuGUI.DARK);
-        contentPane.add(deleteBoardPanel);
+    private void configureCornerMenu() {
+        cornerMenuPanel = new JPanel();
+        cornerMenuPanel.setLayout(null);
+        cornerMenuPanel.setBounds(0, 600, 200, 200);
+        cornerMenuPanel.setBackground(MainMenuGUI.DARK);
+        contentPane.add(cornerMenuPanel);
+        addDeleteButton();
+        addReturnButton();
+        
     }
+
+    // EFFECT: Create a button that when clicked deletes this board.
+    //         When clicked return to main menu and delete the board.
+    private void addDeleteButton() {
+        JButton deleteBoardButton = new JButton();
+        deleteBoardButton.setText("Delete Permanently");
+        deleteBoardButton.setBounds(10, 20, 180, 60);
+        deleteBoardButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    MainMenuGUI.planner.removeBoard(board.getName());
+                    mainMenu.setLocation(boardMenuJFrame.getX(), boardMenuJFrame.getY());
+                    mainMenu.refreshBoards();
+                    mainMenu.show();
+                    boardMenuJFrame.dispose();
+                }
+            }
+        });
+        cornerMenuPanel.add(deleteBoardButton);
+    }
+
+    // EFFECT: Create a button that when clicked returns to main menu.
+    private void addReturnButton() {
+        JButton returnButton = new JButton();
+        returnButton.setText("Main Menu");
+        returnButton.setBounds(10, 90, 180, 60);
+        returnButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    mainMenu.setLocation(boardMenuJFrame.getX(), boardMenuJFrame.getY());
+                    mainMenu.refreshBoards();
+                    mainMenu.show();
+                    boardMenuJFrame.dispose();
+                }
+            }
+        });
+        cornerMenuPanel.add(returnButton);
+    }
+
+
 
     //EFFECT: Initialize and configure the basic JPanel and JScrollPane Used to hold all the champions
     public void configureChampionDisplay() {
