@@ -19,16 +19,16 @@ import java.io.IOException;
 //
 public class MainMenuGUI implements ActionListener { 
     // Aesthetic Constants
-    public final Color dark = Color.decode("#1A1423");
-    public final Color comp1 = Color.decode("#4A505E");
-    public final Color comp2 = Color.decode("#7A8B99");
+    public static final Color DARK = Color.decode("#1A1423");
+    public static final Color COMP1 = Color.decode("#4A505E");
+    public static final Color COMP2 = Color.decode("#7A8B99");
 
     // MainMenuGUI JFrame Layers
     private JFrame mainMenuJFrame;
     private JLayeredPane mainMenuLayers;
     private Container contentPane;
 
-    // OptioPanel Components
+    // JFrame Components
     private JPanel optionPanel;
     private JButton addBoardButton;
     private JInternalFrame popup;
@@ -72,9 +72,9 @@ public class MainMenuGUI implements ActionListener {
         boardPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         optionPanel.setBounds(0,0,200,800);
         boardPanel.setBounds(200,0,800,800);
-        optionPanel.setBackground(dark);
+        optionPanel.setBackground(DARK);
         setMenuBarComponents();
-        boardPanel.setBackground(comp1);
+        boardPanel.setBackground(COMP1);
         contentPane.add(optionPanel);
         contentPane.add(boardPanel);
         
@@ -85,7 +85,7 @@ public class MainMenuGUI implements ActionListener {
         boardPanel.removeAll();
         boardPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         boardPanel.setBounds(200,0,800,800);
-            displayBoardDeck();
+        displayBoardDeck();
         
     }
 
@@ -171,8 +171,8 @@ public class MainMenuGUI implements ActionListener {
     public void addSessionRecoveryButtons(JInternalFrame recoveryPopup) {
         JButton yes = new JButton("Yes");
         JButton no = new JButton("No");
-        yes.setBackground(comp1);
-        no.setBackground(comp1);
+        yes.setBackground(COMP1);
+        no.setBackground(COMP1);
         yes.setBounds(140, 100, 100, 30);
         no.setBounds(260, 100, 100, 30);
         recoveryPopup.add(yes);
