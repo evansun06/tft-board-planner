@@ -108,15 +108,7 @@ public class BoardMenuGUI {
     // EFFECT: Create the JPanel and Label for the associating champion
     //         Also create border according to cost.
     public void configureChampionPanel(ChampionTemplate t) {
-        JPanel championPanel = new JPanel();
-        JLabel championLabel = new JLabel();
-        championPanel.setSize(80, 50);
-        championPanel.setBackground(MainMenuGUI.DARK);
-        championPanel.setBorder(new LineBorder(COSTCOLORS.get(t.getCost()), 1));
-        championLabel.setText(t.getName());
-        championLabel.setForeground(Color.WHITE);
-        championLabel.setBounds(15,10,50, 30);
-        championPanel.add(championLabel);
+        JPanel championPanel = new ChampionSelectPanel(t);
         selectChampionPanel.add(championPanel);
     }
 
