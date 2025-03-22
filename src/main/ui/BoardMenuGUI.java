@@ -10,6 +10,7 @@ import java.util.Map;
 
 
 import model.Board;
+import model.ChampionInstance;
 import model.ChampionTemplate;
 import model.Placeable;
 import model.Set;
@@ -45,14 +46,16 @@ public class BoardMenuGUI {
 
 
     private Hex[][] hexBoard = new Hex[7][4];
-    private ChampionTemplate selectedChampion;
+
+    private ChampionTemplate selectedChampionTemplate;
+    public ChampionInstance toSwap;
 
 
     // EFFECT: Create new board menu
     public BoardMenuGUI(MainMenuGUI main, Board b) {
         this.mainMenu = main;
         this.board = b;
-        this.selectedChampion = null;
+        this.selectedChampionTemplate = null;
         boardMenuJFrame = new DefaultFrame(b.getName());
         boardMenuJFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         configureLayers();
@@ -174,9 +177,9 @@ public class BoardMenuGUI {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
-                    if (selectedChampion == null) {
+                    if (selectedChampionTemplate == null) {
                         highlightHexes();
-                        selectedChampion = t;
+                        selectedChampionTemplate = t;
                     }
                 }
             }
@@ -233,24 +236,68 @@ public class BoardMenuGUI {
             configureHexListeners(championHex);
         } 
     }
+
     // EFFECT: Create action listeners that allow the assignment, swap, and removal of champions on the roster.
     public void configureHexListeners(Hex hex) {
         hex.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
-                    if (selectedChampion != null) {
-                        
-                        hex.assignChampion(selectedChampion);
-                        board.addChampionToBoard(selectedChampion, hex.getHexX(), hex.getHexY());
-                        selectedChampion = null;
-                        unhighlightHexes();
+                    if (selectedChampionTemplate != null) {
+                        if (!board.isFull()) {
+                            hex.assignChampion(selectedChampionTemplate, board);
+                        } else {
+                            displayRosterFullPopup();
+                        }
+                        unselect();
+                    } else if (toSwap == null) {
+                        if (hex.getChampionAtHex() != null) {
+                            toSwap = hex.getChampionAtHex();
+                            highlightHexes();
+                        }
+
+                    } else if (toSwap != null) {
+                        if (hex.getChampionAtHex() != null) {
+                            Hex old = hexBoard[toSwap.getX()][toSwap.getY()]; 
+                            int x1 = old.getHexX(); // Get old hex's X coordinate
+                            int y1 = old.getHexY(); // Get old hex's Y coordinate
+                            int x2 = hex.getHexX(); // Get target hex's X coordinate
+                            int y2 = hex.getHexY(); // Get target hex's Y coordinate
+
+                            ChampionInstance champ1 = old.getChampionAtHex(); // Champion currently in old hex
+                            ChampionInstance champ2 = hex.getChampionAtHex(); // Champion currently in target hex
+
+                            // Swap the champion references in the hexes
+                            old.assignChampion(champ2);
+                            hex.assignChampion(champ1);
+
+                            // Update champion locations to match their new hex positions
+                            champ1.setLocation(x2, y2);
+                            champ2.setLocation(x1, y1);
+                            champ1.setLocation(x2, y2);
+                            champ2.setLocation(x1, y1);
+
+                            unselect();
+                            
+                        }
                     }
-                }
+                } 
             }
         });
     }
 
+    public void displayRosterFullPopup() {
+        PopupInternalFrame fullBoardPopup = new PopupInternalFrame("Board Full");
+        JLabel warning = new JLabel();
+        warning.setText("You're Board Is Maxed");
+        warning.setBounds(125, 30, 250, 30);
+        fullBoardPopup.add(warning);
+        boardMenuLayers.add(fullBoardPopup, JLayeredPane.POPUP_LAYER);
+        fullBoardPopup.setVisible(true);
+        
+    }
+
+    // EFFECT: Bind Escape as the key to disellect everything
     public void bindEsc() {
         boardMenuJFrame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
             .put(KeyStroke.getKeyStroke("ESCAPE"), "deselectChampion");
@@ -258,15 +305,20 @@ public class BoardMenuGUI {
         boardMenuJFrame.getRootPane().getActionMap().put("deselectChampion", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (selectedChampion != null) {
-                    System.out.println("CLICKED");
-                    unhighlightHexes();
-                    selectedChampion = null;
+                if (selectedChampionTemplate != null || toSwap != null) {
+                    unselect();
                 }
             }
         });
     }
     
+    // EFFECT: Unselect all parameters
+    public void unselect() {
+        unhighlightHexes();
+        selectedChampionTemplate = null;
+        toSwap = null;
+    }
+
 
     // REQUIRES: The double array of hexes to be instantiated
     // EFFECT: Highlight all hexes

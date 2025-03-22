@@ -22,7 +22,7 @@ public abstract class Placeable {
     // REQUIRES: 0 <= x <= 6, 0 <= y <= 3.
     // MODIFIES: this
     // EFFECTS: Sets locx and locy of a  Placeable to the desired location.
-    protected void setLocation(int x, int y) {
+    public void setLocation(int x, int y) {
         locx = x;
         locy = y;
     }

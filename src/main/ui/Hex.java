@@ -10,6 +10,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
+import model.Board;
 import model.ChampionInstance;
 import model.ChampionTemplate;
 
@@ -127,10 +128,19 @@ public class Hex extends JPanel {
     }
 
     // EFFECT: Assign champion to this board hex specifically a NEW instance
-    protected void assignChampion(ChampionTemplate template) {
-        championOnRoster = new ChampionInstance(template, hexX, hexY);
+    protected void assignChampion(ChampionTemplate template, Board b) {
+        b.addChampionToBoard(template, hexX, hexY);
+        championOnRoster = b.getChampionFromBoard(hexX, hexY);
         displayChampion();
     }
+
+    // EFFECT: Assign a champion instance (Used for swaps)
+    protected void assignChampion(ChampionInstance instance) {
+        championOnRoster = instance;
+        displayChampion();
+    }
+
+
 
     // GETTERS
     public int getHexX() {
@@ -139,6 +149,10 @@ public class Hex extends JPanel {
 
     public int getHexY() {
         return hexY;
+    }
+
+    public ChampionInstance getChampionAtHex() {
+        return this.championOnRoster;
     }
     
 

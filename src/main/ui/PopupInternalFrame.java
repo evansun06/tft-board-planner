@@ -8,7 +8,7 @@ public class PopupInternalFrame extends JInternalFrame {
 
     // EFFECT: Make a unclosable JInternalFrame that centers for the DefaultFrame dimensions
     public PopupInternalFrame(String name) {
-        super(name, true, false, false, false);
+        super(name, true, true, false, false);
         this.setSize(500,200);
         this.setLayout(null);
         this.setResizable(false);

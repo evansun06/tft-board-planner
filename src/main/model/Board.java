@@ -36,7 +36,7 @@ public class Board {
     //         Else, does nothing.
   
     public void addChampionToBoard(ChampionTemplate champ, int x, int y) {
-        if ((champ.readilyPlaceable) && (roster.size() < maxRosterSize) && (locationIsEmpty(x, y))) {
+        if ((champ.readilyPlaceable) && !isFull() && (locationIsEmpty(x, y))) {
             roster.add(new ChampionInstance(champ, x, y));
         }
     }
@@ -63,6 +63,7 @@ public class Board {
         return true;
     }
 
+
     // REQUIRES: 1 <= placement <= 8
     // MODIFIES: this
     // EFFECT: adds a game placement to history
@@ -81,6 +82,11 @@ public class Board {
             }
         }
         return null;
+    }
+
+    // EFFECTS: returns weather the board is full or not
+    public Boolean isFull() {
+        return (roster.size() >= maxRosterSize);
     }
  
     // Getters

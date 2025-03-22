@@ -155,6 +155,7 @@ public class MainMenuGUI implements ActionListener {
     //          Will not let user continue unless a descision is made.
     public void promptSessionRecovery() {
         popup = new PopupInternalFrame("Session Recovery");
+        popup.setClosable(false);
         addSessionRecoveryButtons(popup); // Add buttons from helper.
         JLabel prompt = new JLabel("Do you want to recover your previous session?");
         prompt.setSize(300,30);
