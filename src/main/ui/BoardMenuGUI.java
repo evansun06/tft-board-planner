@@ -52,6 +52,7 @@ public class BoardMenuGUI {
         configureLayers();
         configureCornerMenu();
         configureChampionDisplay();
+        configureHexBoard();
         configureWindowListener(main); //Show = TRUE
         
     }
@@ -157,6 +158,16 @@ public class BoardMenuGUI {
     public void configureChampionPanel(ChampionTemplate t) {
         JPanel championPanel = new ChampionSelectPanel(t);
         selectChampionPanel.add(championPanel);
+    }
+
+    // EFFECT: Draw HEX
+    public void configureHexBoard() {
+        boardDisplayPanel = new JPanel();
+        boardDisplayPanel.setLayout(null);
+        boardDisplayPanel.setBounds(0, 0, 1000, 600);
+        boardDisplayPanel.setBackground(MainMenuGUI.COMP1);
+        boardDisplayPanel.add(new Hex(100, 100));
+        contentPane.add(boardDisplayPanel);
     }
 
 
