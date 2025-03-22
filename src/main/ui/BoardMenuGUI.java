@@ -52,14 +52,20 @@ public class BoardMenuGUI {
     public BoardMenuGUI(MainMenuGUI main, Board b) {
         this.mainMenu = main;
         this.board = b;
-        selectedChampion = null;
+        this.selectedChampion = null;
         boardMenuJFrame = new DefaultFrame(b.getName());
         boardMenuJFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         configureLayers();
         configureCornerMenu();
         configureChampionDisplay();
         bindEsc();
-        configureBoardDisplay();
+        if (!board.getRoster().isEmpty()) {
+            //TODO: ADD a display method that considers the champions in the board.
+        } else {
+            configureBoardDisplay(); 
+        }
+        
+        
         configureWindowListener(main); //Show = TRUE
         
     }
@@ -77,6 +83,7 @@ public class BoardMenuGUI {
             }
         });
     }
+
 
     // EFFECT: Create a corner JPanel with the option to delete the board.
     private void configureCornerMenu() {
@@ -146,6 +153,8 @@ public class BoardMenuGUI {
         loadAllAvailableChampions();
     }
 
+
+
     //EFFECT: Load Champions into the championSelectJPanel as JPanels by cost.
     public void loadAllAvailableChampions() {
         Set setForThisBoard = this.board.getSet();
@@ -191,7 +200,7 @@ public class BoardMenuGUI {
         contentPane.add(boardDisplayPanel);
     }
 
-    // EFFECT: Displays the full hexboard
+    // EFFECT: Displays the full hexboard with consideration for champions
     public void displayNewHexboard() {
         int gap = 10;
         int x = 70;
@@ -202,6 +211,7 @@ public class BoardMenuGUI {
         for (int yy = 0; yy < 4; yy++) {
             for (int xx = 0; xx < 7; xx++) {
                 Hex newHex = new Hex(x, y);
+                configureHexListeners(newHex);
                 boardDisplayPanel.add(newHex);
                 hexBoard[xx][yy] = newHex;
                 x += dx;
@@ -213,6 +223,12 @@ public class BoardMenuGUI {
             }
             y += dy;
         }
+    }
+
+
+    // EFFECT: Create action listeners that allow the assignment, swap, and removal of champions on the roster.
+    public void configureHexListeners(Hex hex) {
+        // TODO: Create Mouslisteners
     }
 
     public void bindEsc() {

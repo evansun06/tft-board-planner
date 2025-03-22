@@ -4,20 +4,25 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
 import model.ChampionInstance;
+import model.ChampionTemplate;
 
 //This is a specific JPanel that can be configured to draw a hexagon
 //The Hex Class also contains the respective champion assigned to it
 public class Hex extends JPanel {
-    public ChampionInstance championOnRoster;
-    public int hexX;
-    public int hexY;
-    public Color rimColor;
+    private ChampionInstance championOnRoster;
+    private int hexX;
+    private int hexY;
+    
+    private Color rimColor;
+    private Color fillColor;
     public static final int HEXRADIUS = 70;
+    private JLabel champLabel;
 
     // EFFECT: Constructor
     public Hex(int x, int y) {
@@ -25,7 +30,11 @@ public class Hex extends JPanel {
         hexX = x;
         hexY = y;
         rimColor = Color.RED;
-        this.setBounds(x - (int)(HEXRADIUS * Math.sqrt(3)/2), y - HEXRADIUS, (int)(2* HEXRADIUS * Math.sqrt(3)/2), HEXRADIUS * 2);
+        fillColor = MainMenuGUI.DARK;
+        configureChampLabel();
+        this.setBounds(x - (int)(HEXRADIUS * Math.sqrt(3) / 2), y - HEXRADIUS,
+                (int)(2 * HEXRADIUS * Math.sqrt(3) / 2), HEXRADIUS * 2);
+                
         //this.setBorder(new LineBorder(BoardMenuGUI.COSTCOLORS.get(1), 1));
         this.setOpaque(false); // SET TRANSPARENT.
         championOnRoster = null;
@@ -40,11 +49,11 @@ public class Hex extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
 
         // Calculate the center of the panel
-        int centerX = (int)(HEXRADIUS * Math.sqrt(3)/ 2);
+        int centerX = (int)(HEXRADIUS * Math.sqrt(3) / 2);
         int centerY = HEXRADIUS;
 
         // Set the fill color for the hexagon
-        g2d.setColor(MainMenuGUI.DARK);
+        g2d.setColor(fillColor);
         fillHex(g2d, centerX, centerY, HEXRADIUS);
 
         // Set the outline color
@@ -55,23 +64,23 @@ public class Hex extends JPanel {
     // EFFECT: Draw a hex polygon with a rotated orientation
     protected void drawHex(Graphics g, int x, int y, int r) {
         // X points going clockwise, starting from the bottom-left corner
-        int[] xPoints = {x, x + (int)(r * Math.sqrt(3) / 2), x + (int)(r * Math.sqrt(3) / 2),
-                        x, x - (int)(r * Math.sqrt(3) / 2), x - (int)(r * Math.sqrt(3) / 2)};
+        int[] xpoints = {x, x + (int)(r * Math.sqrt(3) / 2), x + (int)(r * Math.sqrt(3) / 2),
+                x, x - (int)(r * Math.sqrt(3) / 2), x - (int)(r * Math.sqrt(3) / 2)};
         
         // Y points going clockwise, starting from the bottom-left corner
-        int[] yPoints = {y + r, y + r / 2, y - r / 2, y - r, y - r / 2, y + r / 2};
-        g.drawPolygon(xPoints, yPoints, 6);
+        int[] ypoints = {y + r, y + r / 2, y - r / 2, y - r, y - r / 2, y + r / 2};
+        g.drawPolygon(xpoints, ypoints, 6);
     }
 
     // Helper method to fill the hexagon with a rotated orientation
     protected void fillHex(Graphics2D g2d, int x, int y, int r) {
         // X points going clockwise, starting from the bottom-left corner
-        int[] xPoints = {x, x + (int)(r * Math.sqrt(3) / 2), x + (int)(r * Math.sqrt(3) / 2),
-                        x, x - (int)(r * Math.sqrt(3) / 2), x - (int)(r * Math.sqrt(3) / 2)};
+        int[] xpoints = {x, x + (int)(r * Math.sqrt(3) / 2), x + (int)(r * Math.sqrt(3) / 2),
+                x, x - (int)(r * Math.sqrt(3) / 2), x - (int)(r * Math.sqrt(3) / 2)};
         
         // Y points going clockwise, starting from the bottom-left corner
-        int[] yPoints = {y + r, y + r / 2, y - r / 2, y - r, y - r / 2, y + r / 2};
-        g2d.fillPolygon(xPoints, yPoints, 6);
+        int[] ypoints = {y + r, y + r / 2, y - r / 2, y - r, y - r / 2, y + r / 2};
+        g2d.fillPolygon(xpoints, ypoints, 6);
     }
 
     // EFFECT: Highlight
@@ -85,6 +94,45 @@ public class Hex extends JPanel {
         rimColor = Color.RED;
         this.repaint();
     }
+
+    // REQUIRES: Champion to be assigned to this hex
+    // EFFECT: Changes the fill color according to the champion assigned
+    protected void displayChampion() {
+        fillColor = BoardMenuGUI.COSTCOLORS.get(championOnRoster.getCost());
+        champLabel.setText(championOnRoster.getName());
+        champLabel.setVisible(true);
+        this.repaint();
+        
+    }
+
+    // EFFECT: Create a champ label
+    protected void configureChampLabel() {
+        champLabel = new JLabel();
+        champLabel.setBounds(HEXRADIUS, 30, 100, 20);
+        champLabel.setVisible(false);
+        this.add(champLabel);
+    }
+
+    // EFFECT: Return hex to default display and no assigned champion
+    protected void returnToDefault() {
+        rimColor = Color.RED;
+        fillColor = MainMenuGUI.DARK;
+        champLabel.setVisible(false);
+        championOnRoster = null;
+        this.repaint();
+    }
+
+    // EFFECT: Assign champion to this board hex specifically a NEW instance
+    protected void assigneChampion(ChampionTemplate template, int x, int y) {
+        this.championOnRoster = new ChampionInstance(template, x, y);
+        displayChampion();
+    }
+
+
+    
+    
+
+
 
 
 
