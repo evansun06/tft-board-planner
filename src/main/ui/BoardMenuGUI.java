@@ -43,19 +43,27 @@ public class BoardMenuGUI {
     private JPanel cornerMenuPanel;
     private JScrollPane scrollPane;
 
+
+    private Hex[][] hexBoard = new Hex[7][4];
+    private ChampionTemplate selectedChampion;
+
+
     // EFFECT: Create new board menu
     public BoardMenuGUI(MainMenuGUI main, Board b) {
         this.mainMenu = main;
         this.board = b;
+        selectedChampion = null;
         boardMenuJFrame = new DefaultFrame(b.getName());
         boardMenuJFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         configureLayers();
         configureCornerMenu();
         configureChampionDisplay();
-        configureHexBoard();
+        bindEsc();
+        configureBoardDisplay();
         configureWindowListener(main); //Show = TRUE
         
     }
+
 
     // EFFECT: Add window listener that ensures switchback to main menu
     public void configureWindowListener(MainMenuGUI main) {
@@ -157,19 +165,90 @@ public class BoardMenuGUI {
     //         Also create border according to cost.
     public void configureChampionPanel(ChampionTemplate t) {
         JPanel championPanel = new ChampionSelectPanel(t);
+        championPanel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    if (selectedChampion == null) {
+                        highlightHexes();
+                        selectedChampion = t;
+                    }
+                }
+            }
+            
+
+        });
         selectChampionPanel.add(championPanel);
     }
 
-    // EFFECT: Draw HEX
-    public void configureHexBoard() {
+    // EFFECT: Configure the Board Display
+    public void configureBoardDisplay() {
         boardDisplayPanel = new JPanel();
         boardDisplayPanel.setLayout(null);
         boardDisplayPanel.setBounds(0, 0, 1000, 600);
-        boardDisplayPanel.setBackground(MainMenuGUI.COMP1);
-        boardDisplayPanel.add(new Hex(100, 100));
+        boardDisplayPanel.setBackground(MainMenuGUI.DARK);
+        displayNewHexboard();
         contentPane.add(boardDisplayPanel);
     }
 
+    // EFFECT: Displays the full hexboard
+    public void displayNewHexboard() {
+        int gap = 10;
+        int x = 70;
+        int xOffSet = 70 + (int)(Hex.HEXRADIUS * (Math.sqrt(3)/2)) + gap/2;
+        int y = 120;
+        int dx = (int)(Hex.HEXRADIUS * Math.sqrt(3)) + gap;
+        int dy = (3 * Hex.HEXRADIUS)/2 + gap;
+        for (int yy = 0; yy < 4; yy++) {
+            for (int xx = 0; xx < 7; xx++) {
+                Hex newHex = new Hex(x, y);
+                boardDisplayPanel.add(newHex);
+                hexBoard[xx][yy] = newHex;
+                x += dx;
+            }
+            if (yy % 2 == 0) {
+                x = xOffSet;
+            } else {
+                x = 70;
+            }
+            y += dy;
+        }
+    }
+
+    public void bindEsc() {
+        boardMenuJFrame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+            .put(KeyStroke.getKeyStroke("ESCAPE"), "deselectChampion");
+    
+        boardMenuJFrame.getRootPane().getActionMap().put("deselectChampion", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (selectedChampion != null) {
+                    System.out.println("CLICKED");
+                    unhighlightHexes();
+                    selectedChampion = null;
+                }
+            }
+        });
+    }
+    
+
+    // REQUIRES: The double array of hexes to be instantiated
+    // EFFECT: Highlight all hexes
+    public void highlightHexes() {
+        for (int y = 0; y < 4; y++) {
+            for (int x = 0; x < 7; x++) {
+                hexBoard[x][y].highlight();
+            }
+        }
+    }
+    // REQUIRES: The double array of hexes
+    public void unhighlightHexes() {
+        for (int y = 0; y < 4; y++) {
+            for (int x = 0; x < 7; x++) {
+                hexBoard[x][y].unhighlight();
+            }
+        }
+    }
 
     // EFFECT: Assign fields for layers in the JFrame
     public void configureLayers() {
@@ -188,6 +267,8 @@ public class BoardMenuGUI {
     public void show() {
         boardMenuJFrame.setVisible(true);
     }
+
+    
 
     
 }

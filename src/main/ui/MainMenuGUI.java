@@ -254,7 +254,6 @@ public class MainMenuGUI implements ActionListener {
     }
     
 
-    
 
     @Override
     // EFFECT: Customize functions as a result of different actions

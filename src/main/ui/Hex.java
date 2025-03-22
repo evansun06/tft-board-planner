@@ -5,7 +5,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
-
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 
 import model.ChampionInstance;
 
@@ -13,15 +14,20 @@ import model.ChampionInstance;
 //The Hex Class also contains the respective champion assigned to it
 public class Hex extends JPanel {
     public ChampionInstance championOnRoster;
-    public int hexX = 100;
-    public int hexY = 100;
-    public static int hexRadius = 60;
+    public int hexX;
+    public int hexY;
+    public Color rimColor;
+    public static final int HEXRADIUS = 70;
 
     // EFFECT: Constructor
     public Hex(int x, int y) {
         super();
-        this.setBounds(x - hexRadius, y - hexRadius, hexRadius * 2, (int)(hexRadius * Math.sqrt(3)));
-        // this.setOpaque(false); // SET OPAQUE
+        hexX = x;
+        hexY = y;
+        rimColor = Color.RED;
+        this.setBounds(x - (int)(HEXRADIUS * Math.sqrt(3)/2), y - HEXRADIUS, (int)(2* HEXRADIUS * Math.sqrt(3)/2), HEXRADIUS * 2);
+        //this.setBorder(new LineBorder(BoardMenuGUI.COSTCOLORS.get(1), 1));
+        this.setOpaque(false); // SET TRANSPARENT.
         championOnRoster = null;
     }
 
@@ -34,37 +40,54 @@ public class Hex extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
 
         // Calculate the center of the panel
-        int centerX = getWidth() / 2;
-        int centerY = getHeight() / 2;
+        int centerX = (int)(HEXRADIUS * Math.sqrt(3)/ 2);
+        int centerY = HEXRADIUS;
 
         // Set the fill color for the hexagon
-        g2d.setColor(MainMenuGUI.COMP1);
-        fillHex(g2d, centerX, centerY, hexRadius);
+        g2d.setColor(MainMenuGUI.DARK);
+        fillHex(g2d, centerX, centerY, HEXRADIUS);
 
         // Set the outline color
-        g2d.setColor(Color.RED);
-        drawHex(g2d, centerX, centerY, hexRadius);
+        g2d.setColor(rimColor);
+        drawHex(g2d, centerX, centerY, HEXRADIUS);
     }
 
-    // EFFECT: Draw a hex polygon for a specific radius at a 
-    //         cetrain x,y.
+    // EFFECT: Draw a hex polygon with a rotated orientation
     protected void drawHex(Graphics g, int x, int y, int r) {
-        //X points going clockwise from the most eastern point
-        int[] xPoints = {x + r, x + r/2, x - r/2, x - r, x - r/2, x + r/2};
-
-        int a = (int)(Math.sqrt(3)/2 * r);
-        //Y points going clockwise from most eastern point
-        int[] yPoints = {y, y - a, y - a, y, y + a, y + a };
-        g.drawPolygon(xPoints,yPoints, 6);
+        // X points going clockwise, starting from the bottom-left corner
+        int[] xPoints = {x, x + (int)(r * Math.sqrt(3) / 2), x + (int)(r * Math.sqrt(3) / 2),
+                        x, x - (int)(r * Math.sqrt(3) / 2), x - (int)(r * Math.sqrt(3) / 2)};
+        
+        // Y points going clockwise, starting from the bottom-left corner
+        int[] yPoints = {y + r, y + r / 2, y - r / 2, y - r, y - r / 2, y + r / 2};
+        g.drawPolygon(xPoints, yPoints, 6);
     }
 
-    // EFFECT: Helper method to fill the hexagon
+    // Helper method to fill the hexagon with a rotated orientation
     protected void fillHex(Graphics2D g2d, int x, int y, int r) {
-        int[] xPoints = {x + r, x + r / 2, x - r / 2, x - r, x - r / 2, x + r / 2};
-        int a = (int) (Math.sqrt(3) / 2 * r);
-        int[] yPoints = {y, y - a, y - a, y, y + a, y + a};
+        // X points going clockwise, starting from the bottom-left corner
+        int[] xPoints = {x, x + (int)(r * Math.sqrt(3) / 2), x + (int)(r * Math.sqrt(3) / 2),
+                        x, x - (int)(r * Math.sqrt(3) / 2), x - (int)(r * Math.sqrt(3) / 2)};
+        
+        // Y points going clockwise, starting from the bottom-left corner
+        int[] yPoints = {y + r, y + r / 2, y - r / 2, y - r, y - r / 2, y + r / 2};
         g2d.fillPolygon(xPoints, yPoints, 6);
     }
+
+    // EFFECT: Highlight
+    protected void highlight() {
+        rimColor = Color.WHITE;
+        this.repaint();
+    }
+
+    // EFFECT: UnHighlight
+    protected void unhighlight() {
+        rimColor = Color.RED;
+        this.repaint();
+    }
+
+
+
 
     
 }
