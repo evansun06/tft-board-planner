@@ -3,6 +3,7 @@ package ui;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.Timer;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -21,6 +22,7 @@ public class Hex extends JPanel {
     // Coordinate for board
     private int hexX;
     private int hexY;
+    private Timer timer;
     
     private Color rimColor;
     private Color fillColor;
@@ -33,7 +35,7 @@ public class Hex extends JPanel {
         this.setLayout(null);
         hexX = xx;
         hexY = yy;
-        rimColor = Color.RED;
+        rimColor = Color.WHITE;
         fillColor = MainMenuGUI.DARK;
         configureChampLabel();
         this.setBounds(x - (int)(HEXRADIUS * Math.sqrt(3) / 2), y - HEXRADIUS,
@@ -89,13 +91,13 @@ public class Hex extends JPanel {
 
     // EFFECT: Highlight
     protected void highlight() {
-        rimColor = Color.WHITE;
+        rimColor = Color.RED;
         this.repaint();
     }
 
     // EFFECT: UnHighlight
     protected void unhighlight() {
-        rimColor = Color.RED;
+        rimColor = Color.WHITE;
         this.repaint();
     }
 
@@ -120,7 +122,7 @@ public class Hex extends JPanel {
 
     // EFFECT: Return hex to default display and no assigned champion
     protected void returnToDefault() {
-        rimColor = Color.RED;
+        rimColor = Color.WHITE;
         fillColor = MainMenuGUI.DARK;
         champLabel.setVisible(false);
         championOnRoster = null;
@@ -139,6 +141,8 @@ public class Hex extends JPanel {
         championOnRoster = instance;
         displayChampion();
     }
+
+    
 
 
 

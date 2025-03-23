@@ -2,6 +2,7 @@ package ui;
 
 import javax.swing.*;
 
+import static org.junit.jupiter.api.DynamicContainer.dynamicContainer;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -43,11 +44,14 @@ public class BoardMenuGUI {
     private JPanel selectChampionPanel;
     private JPanel cornerMenuPanel;
     private JScrollPane scrollPane;
+    private JPanel statPanel;
+    private JLabel statlabel;
 
-
+    private Timer timer;
     private Hex[][] hexBoard = new Hex[7][4];
 
     private ChampionTemplate selectedChampionTemplate;
+    private ChampionInstance toDisplay;
     public ChampionInstance toSwap;
 
 
@@ -63,10 +67,8 @@ public class BoardMenuGUI {
         configureChampionDisplay();
         bindEsc();
         configureBoardDisplay();
-        
-        
+        configureStatPanel();
         configureWindowListener(main); //Show = TRUE
-        
     }
 
 
@@ -179,6 +181,7 @@ public class BoardMenuGUI {
                 if (e.getButton() == MouseEvent.BUTTON1) {
                     if (selectedChampionTemplate == null) {
                         highlightHexes();
+                        displayStats(t);
                         selectedChampionTemplate = t;
                     }
                 }
@@ -194,17 +197,33 @@ public class BoardMenuGUI {
         boardDisplayPanel = new JPanel();
         boardDisplayPanel.setLayout(null);
         boardDisplayPanel.setBounds(0, 0, 1000, 600);
-        boardDisplayPanel.setBackground(MainMenuGUI.DARK);
+        boardDisplayPanel.setBackground(MainMenuGUI.COMP2);
         displayNewHexboard();
         contentPane.add(boardDisplayPanel);
     }
+
+    
+
+    public void configureStatPanel() {
+        statPanel = new JPanel();
+        statlabel = new JLabel();
+        statlabel.setBounds(0,20, 1000, 50);
+        statlabel.setForeground(Color.WHITE);
+        statlabel.setLocation(10, 10);
+        statPanel.setBackground(MainMenuGUI.COMP2);
+        statPanel.setBounds(0,0, 1000, 50);
+        statPanel.add(statlabel);
+        statPanel.setVisible(false);
+        boardDisplayPanel.add(statPanel);
+    }
+
 
     // EFFECT: Displays the full hexboard with consideration for champions
     public void displayNewHexboard() {
         int gap = 10;
         int x = 70;
         int xOffSet = 70 + (int)(Hex.HEXRADIUS * (Math.sqrt(3)/2)) + gap/2;
-        int y = 120;
+        int y = 150;
         int dx = (int)(Hex.HEXRADIUS * Math.sqrt(3)) + gap;
         int dy = (3 * Hex.HEXRADIUS)/2 + gap;
         for (int yy = 0; yy < 4; yy++) {
@@ -246,6 +265,7 @@ public class BoardMenuGUI {
                     if (selectedChampionTemplate != null) {
                         if (!board.isFull()) {
                             hex.assignChampion(selectedChampionTemplate, board);
+                            clearStats();
                         } else {
                             displayRosterFullPopup();
                         }
@@ -263,7 +283,6 @@ public class BoardMenuGUI {
                             int y1 = old.getHexY(); // Get old hex's Y coordinate
                             int x2 = hex.getHexX(); // Get target hex's X coordinate
                             int y2 = hex.getHexY(); // Get target hex's Y coordinate
-
                             ChampionInstance champ1 = old.getChampionAtHex(); // Champion currently in old hex
                             ChampionInstance champ2 = hex.getChampionAtHex(); // Champion currently in target hex
 
@@ -276,15 +295,53 @@ public class BoardMenuGUI {
                             champ2.setLocation(x1, y1);
                             champ1.setLocation(x2, y2);
                             champ2.setLocation(x1, y1);
-
                             unselect();
-                            
+                        } else {
+                            Hex old = hexBoard[toSwap.getX()][toSwap.getY()]; 
+                            old.returnToDefault();
+                            hex.assignChampion(toSwap);
+                            toSwap.setLocation(hex.getHexX(), hex.getHexY());
+                            unselect();
                         }
                     }
-                } 
-            }
-        });
+                } else if (e.getButton() == MouseEvent.BUTTON3) {
+                    if (hex.getChampionAtHex() != null) {
+                        ChampionInstance aboutToDelete = hex.getChampionAtHex();
+                        board.removeChampionFromRoster(aboutToDelete.getX(), aboutToDelete.getY());
+                        hex.returnToDefault();
+                    }
+                }
+            }  
+            
+        }); 
     }
+
+    // EFFECT: Clear Text from stats
+    public void clearStats() {
+        statlabel.setText("");
+        statPanel.setVisible(false);
+    }
+
+    // EFFECT: display stats at the top of the board
+    // EFFECT: Display stats at the top of the board
+public void displayStats(ChampionTemplate c) {
+    statlabel.setText(
+        "Name: " + c.getName() + 
+        " | HP: " + c.getHealth() + 
+        " | ARM: " + c.getArmour() + 
+        " | MR: " + c.getMagicResist() + 
+        " | AD: " + c.getAttackDamage() + 
+        " | AttackSpd: " + c.getAttackSpeed() + 
+        " | AP: " + c.getAbilityPower() + 
+        " | Crit Chance: " + c.getCritChance() + 
+        " | Crit Multiplier: " + c.getCritMultiplier() + 
+        " | Range: " + c.getRange() + 
+        " | Cost: " + c.getCost()
+    );
+    statPanel.setVisible(true);
+}
+
+
 
     public void displayRosterFullPopup() {
         PopupInternalFrame fullBoardPopup = new PopupInternalFrame("Board Full");
@@ -307,6 +364,7 @@ public class BoardMenuGUI {
             public void actionPerformed(ActionEvent e) {
                 if (selectedChampionTemplate != null || toSwap != null) {
                     unselect();
+                    clearStats();
                 }
             }
         });
