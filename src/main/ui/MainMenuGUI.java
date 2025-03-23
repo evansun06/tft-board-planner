@@ -40,7 +40,7 @@ public class MainMenuGUI implements ActionListener {
     private JsonWriter jsonWriter = new JsonWriter("data/userPersistance.json");
 
     //Application State
-    public static Planner planner;
+    private static Planner planner;
     
 
     // EFFECT: constructor that sets the size and attribuites of the Jframe.
@@ -119,7 +119,7 @@ public class MainMenuGUI implements ActionListener {
 
     // EFECT: display boards top-bottom in the boardPanel
     public void displayBoardDeck() {
-        for(Board b: planner.getBoardDeck()) {
+        for (Board b: planner.getBoardDeck()) {
             JButton boardButton = new JButton(b.getName());
             boardButton.addMouseListener(new MouseAdapter() {
                 @Override
@@ -254,19 +254,24 @@ public class MainMenuGUI implements ActionListener {
         mainMenuJFrame.setLocation(x, y);
     }
     
+    // Getter
+    public Planner getPlanner() {
+        return MainMenuGUI.planner;
+    }
 
 
     @Override
     // EFFECT: Customize functions as a result of different actions
     // 1. Create new board when the AddNewBoard button gets triggered
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == addBoardButton) {
+        if (e.getSource() == addBoardButton) {
             if (planner != null && !isMakingBoard) {
                 boardSetUpPrompt();
                 setIsMakingBoard(true);
             }
         } 
     }
+
 
 
     public static void main(String[] args) {

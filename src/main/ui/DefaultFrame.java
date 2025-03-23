@@ -3,8 +3,8 @@ package ui;
 import javax.swing.JFrame;
 
 public class DefaultFrame extends JFrame {
-    public final static int WIDTH = 1000;
-    public final static int HEIGHT = 800;
+    public static final int WIDTH = 1000;
+    public static final int HEIGHT = 800;
 
     public DefaultFrame(String name) {
         super();

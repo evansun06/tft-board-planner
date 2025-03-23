@@ -36,6 +36,31 @@ User Request 7: As a user, I want boards to autosave, but have the option to del
 
 User Request 8: As a user, I want to have the option to load and work on previous boards from application startup.
 
+_Phase 3:_
+
+User Request 9: I want to see the champions stats
+
+User Request 10: I want to be able to swap champion locations.
+
+
+### Instructions for End User
+1. To load up previous saves, click yes on the initial prompt pop up.
+
+2. After dealing with the loading prompt. Users may use the add board button to create a new board.
+    - Give the board a name and confirm.
+3. After dealing with the loading prompt. Users may want to access previous boards.
+    - Click on any board button to enter the board menu
+
+3. Once in the board menu interface. 
+    - To add a champion onto the board, click a champion box in options below to which `empty` hexagons will be highlighted.
+    - Click and empty hexagon to add a champion there.
+    - To move an existing champion on the board, click the hexagon with the champion (board highlights) then click another hexagon to move it.
+    - To swap two existing champions on the board, click one hexagon (board highlights) and another (with champion) and they will swap.
+    - To delete any champion on the board, right click.
+    - To return to the main menu click the `main menu` button, or exit the window.
+4. All boards auto save when exiting the window. To delete a board click `delete` in the board GUI.
+5. All visual components (hexagonal board) were drawn in the class `Hex` as polygons.
+    
 
 
 

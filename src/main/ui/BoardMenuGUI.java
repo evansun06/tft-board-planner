@@ -1,9 +1,6 @@
 package ui;
 
 import javax.swing.*;
-
-import static org.junit.jupiter.api.DynamicContainer.dynamicContainer;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -26,12 +23,12 @@ public class BoardMenuGUI {
     private MainMenuGUI mainMenu;
 
     // Aesthetic Assets
-    public final static Map<Integer, Color> COSTCOLORS = Map.of(
-        1, Color.decode("#AFAFAF"),
-        2, Color.decode("#1BC660"),
-        3, Color.decode("#0C6CC3"),
-        4, Color.decode("#F947C6"),
-        5, Color.decode("#FE8902")
+    public static final Map<Integer, Color> COSTCOLORS = Map.of(
+            1, Color.decode("#AFAFAF"),
+            2, Color.decode("#1BC660"),
+            3, Color.decode("#0C6CC3"),
+            4, Color.decode("#F947C6"),
+            5, Color.decode("#FE8902")
     );
 
     // Layers 
@@ -52,7 +49,7 @@ public class BoardMenuGUI {
 
     private ChampionTemplate selectedChampionTemplate;
     private ChampionInstance toDisplay;
-    public ChampionInstance toSwap;
+    private ChampionInstance toSwap;
 
 
     // EFFECT: Create new board menu
@@ -108,7 +105,7 @@ public class BoardMenuGUI {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
-                    MainMenuGUI.planner.removeBoard(board.getName());
+                    mainMenu.getPlanner().removeBoard(board.getName());
                     mainMenu.setLocation(boardMenuJFrame.getX(), boardMenuJFrame.getY());
                     mainMenu.refreshBoards();
                     mainMenu.show();
@@ -186,8 +183,6 @@ public class BoardMenuGUI {
                     }
                 }
             }
-            
-
         });
         selectChampionPanel.add(championPanel);
     }
@@ -222,17 +217,17 @@ public class BoardMenuGUI {
     public void displayNewHexboard() {
         int gap = 10;
         int x = 70;
-        int xOffSet = 70 + (int)(Hex.HEXRADIUS * (Math.sqrt(3)/2)) + gap/2;
+        int xoffset = 70 + (int)(Hex.HEXRADIUS * (Math.sqrt(3) / 2)) + gap / 2;
         int y = 150;
         int dx = (int)(Hex.HEXRADIUS * Math.sqrt(3)) + gap;
-        int dy = (3 * Hex.HEXRADIUS)/2 + gap;
+        int dy = (3 * Hex.HEXRADIUS) / 2 + gap;
         for (int yy = 0; yy < 4; yy++) {
             for (int xx = 0; xx < 7; xx++) {
                 configureHex(x, y, xx, yy);                
                 x += dx;
             }
             if (yy % 2 == 0) {
-                x = xOffSet;
+                x = xoffset;
             } else {
                 x = 70;
             }
@@ -257,9 +252,11 @@ public class BoardMenuGUI {
     }
 
     // EFFECT: Create action listeners that allow the assignment, swap, and removal of champions on the roster.
+    @SuppressWarnings("methodlength")
     public void configureHexListeners(Hex hex) {
         hex.addMouseListener(new MouseAdapter() {
             @Override
+            @SuppressWarnings("methodlength")
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
                     if (selectedChampionTemplate != null) {
@@ -324,22 +321,22 @@ public class BoardMenuGUI {
 
     // EFFECT: display stats at the top of the board
     // EFFECT: Display stats at the top of the board
-public void displayStats(ChampionTemplate c) {
-    statlabel.setText(
-        "Name: " + c.getName() + 
-        " | HP: " + c.getHealth() + 
-        " | ARM: " + c.getArmour() + 
-        " | MR: " + c.getMagicResist() + 
-        " | AD: " + c.getAttackDamage() + 
-        " | AttackSpd: " + c.getAttackSpeed() + 
-        " | AP: " + c.getAbilityPower() + 
-        " | Crit Chance: " + c.getCritChance() + 
-        " | Crit Multiplier: " + c.getCritMultiplier() + 
-        " | Range: " + c.getRange() + 
-        " | Cost: " + c.getCost()
-    );
-    statPanel.setVisible(true);
-}
+    public void displayStats(ChampionTemplate c) {
+        statlabel.setText(
+                "Name: " + c.getName()  
+                + " | HP: " + c.getHealth()  
+                + " | ARM: " + c.getArmour() 
+                + " | MR: " + c.getMagicResist() 
+                + " | AD: " + c.getAttackDamage() 
+                + " | AttackSpd: " + c.getAttackSpeed()
+                + " | AP: " + c.getAbilityPower()
+                + " | Crit Chance: " + c.getCritChance()
+                + " | Crit Multiplier: " + c.getCritMultiplier() 
+                + " | Range: " + c.getRange() 
+                + " | Cost: " + c.getCost()
+        );
+        statPanel.setVisible(true);
+    }
 
 
 
@@ -387,6 +384,7 @@ public void displayStats(ChampionTemplate c) {
             }
         }
     }
+
     // REQUIRES: The double array of hexes
     public void unhighlightHexes() {
         for (int yy = 0; yy < 4; yy++) {
