@@ -2,9 +2,13 @@ package ui;
 
 import javax.swing.*;
 
+
 import persistance.JsonReader;
 import persistance.JsonWriter;
 import model.*;
+
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
 
 import java.awt.Color;
 import java.awt.Container;
@@ -220,6 +224,13 @@ public class MainMenuGUI implements ActionListener {
     //EFFECT: loads a JInternal frame that collects a name.
     public void boardSetUpPrompt() {
         JInternalFrame setupPopup = new BoardSetUpPopUp(this);
+        setupPopup.addInternalFrameListener(new InternalFrameAdapter() {
+            @Override
+            public void internalFrameClosed(InternalFrameEvent e) {
+                setIsMakingBoard(false);
+            }
+        });
+
         mainMenuLayers.add(setupPopup, JLayeredPane.POPUP_LAYER);
         setupPopup.setVisible(true);
     

@@ -2,6 +2,7 @@ package ui;
 
 import javax.swing.JFrame;
 
+// Default frame for the board and main menu GUI
 public class DefaultFrame extends JFrame {
     public static final int WIDTH = 1000;
     public static final int HEIGHT = 800;
