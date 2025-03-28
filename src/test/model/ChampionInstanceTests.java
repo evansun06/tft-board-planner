@@ -14,7 +14,6 @@ public class ChampionInstanceTests {
     void setUp() {
         
         zeriTemplate = new ChampionTemplate("Zeri", 100, 10, 5, 50, 10,10, 10, 10, 6, 2);
-        
         zeri0 = new ChampionInstance(zeriTemplate, 1, 3);
         zeri0.resetInstanceId();
         zeri1 = new ChampionInstance(zeriTemplate, 1, 3);

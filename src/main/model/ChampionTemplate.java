@@ -23,7 +23,6 @@ public class ChampionTemplate extends Placeable {
                     int critX, double attackSpeed, int range, int cost) {
 
         super(true, name);
-        setLocation(-1, -1);
 
         //Set Base Stats
         this.name = name;

@@ -34,6 +34,8 @@ public class PlannerTest {
         assertEquals(2, testPlanner.getBoardDeck().size());
         testPlanner.removeBoard("MyNewBoard1");
         assertEquals(1, testPlanner.getBoardDeck().size());
+        testPlanner.removeBoard("Impossible");
+        assertEquals(1, testPlanner.getBoardDeck().size());
     }
 
     @Test

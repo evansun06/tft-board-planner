@@ -37,7 +37,10 @@ public class Board {
   
     public void addChampionToBoard(ChampionTemplate champ, int x, int y) {
         if ((champ.readilyPlaceable) && !isFull() && (locationIsEmpty(x, y))) {
-            roster.add(new ChampionInstance(champ, x, y));
+            ChampionInstance c = new ChampionInstance(champ, x, y);
+            roster.add(c);
+            EventLog.getInstance().logEvent(new Event("Added " + c.getName() + ", InstanceID: "
+                    + c.getInstanceId() + " to (" + x + ", " + y + " )"));
         }
     }
 
@@ -47,7 +50,12 @@ public class Board {
     //         roster.
     //         Does nothing if no champion at location.
     public void removeChampionFromRoster(int x, int y) {
-        roster.remove(getChampionFromBoard(x, y));
+        ChampionInstance c = getChampionFromBoard(x, y);
+        if (c != null) {
+            roster.remove(getChampionFromBoard(x, y));
+            EventLog.getInstance().logEvent(new Event("Removed " + c.getName() + ", InstanceID: "
+            + c.getInstanceId() + " from (" + x + ", " + y + " )"));
+        }
     }
 
     // REQUIRES:  0 <= x <= 6, 0 <= y <= 3.
@@ -78,6 +86,7 @@ public class Board {
     public ChampionInstance getChampionFromBoard(int x, int y) {
         for (Placeable p: roster) {
             if (p.getX() == x && p.getY() == y) {
+                EventLog.getInstance().logEvent(new Event("Fetched " + p.getName() + " from (" + x + ", " + y + " )"));
                 return (ChampionInstance)p;
             }
         }

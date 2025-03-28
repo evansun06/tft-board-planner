@@ -15,6 +15,8 @@ public abstract class Placeable {
     //EFFECTS: Constructs an placeable object with no
     //         location determined.
     public Placeable(Boolean readilyPlaceable, String name) {
+        locx = -1;
+        locy = -1;
         this.name = name;
         this.readilyPlaceable = readilyPlaceable;
     }
@@ -23,6 +25,8 @@ public abstract class Placeable {
     // MODIFIES: this
     // EFFECTS: Sets locx and locy of a  Placeable to the desired location.
     public void setLocation(int x, int y) {
+        EventLog.getInstance().logEvent(new Event("Moved" + name + " from (" + locx + ", " + locy + " )"
+                + " to (" + x + ", " + y + " )"));
         locx = x;
         locy = y;
     }

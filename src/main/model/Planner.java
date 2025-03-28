@@ -17,6 +17,7 @@ public class Planner {
     // MODIFIES: this
     // EFFECT: Adds a board with set13 champions to the deck with unique name
     public void addBoard(String name) {
+        EventLog.getInstance().logEvent(new Event("New board called `" + name + "` added to planner"));
         boardDeck.add(new Board(name));
     }
 
@@ -24,13 +25,16 @@ public class Planner {
     // EFFECT: Removes the corresponding board from the boardDeck
     //         if no corresponding name, does nothing.
     public void removeBoard(String name) {
-        int index = 0;
+        int index = -1;
         for (Board b: boardDeck) {
             if (b.getName() == name) {
                 index = boardDeck.indexOf(b);
             }
         }
-        boardDeck.remove(index);
+        if (index != -1) {
+            boardDeck.remove(index);
+            EventLog.getInstance().logEvent(new Event("Deleted board called " + name + "from planner"));
+        }
     }
 
     // REQUIRES: boardDeck has only unique board names
