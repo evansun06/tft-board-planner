@@ -33,7 +33,7 @@ public class Planner {
         }
         if (index != -1) {
             boardDeck.remove(index);
-            EventLog.getInstance().logEvent(new Event("Deleted board called " + name + "from planner"));
+            EventLog.getInstance().logEvent(new Event("Deleted board called " + name + " from planner"));
         }
     }
 

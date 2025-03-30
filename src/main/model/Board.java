@@ -53,8 +53,8 @@ public class Board {
         ChampionInstance c = getChampionFromBoard(x, y);
         if (c != null) {
             roster.remove(getChampionFromBoard(x, y));
-            EventLog.getInstance().logEvent(new Event("Removed " + c.getName() + ", InstanceID: "
-            + c.getInstanceId() + " from (" + x + ", " + y + " )"));
+            EventLog.getInstance().logEvent(new Event("BoardName = " + name + " || Removed " + c.getName()
+                    + ", InstanceID: " + c.getInstanceId() + " from (" + x + ", " + y + " )"));
         }
     }
 
@@ -86,7 +86,8 @@ public class Board {
     public ChampionInstance getChampionFromBoard(int x, int y) {
         for (Placeable p: roster) {
             if (p.getX() == x && p.getY() == y) {
-                EventLog.getInstance().logEvent(new Event("Fetched " + p.getName() + " from (" + x + ", " + y + " )"));
+                EventLog.getInstance().logEvent(new Event("BoardName = " + name + " || Fetched "
+                        + p.getName() + " from (" + x + ", " + y + " )"));
                 return (ChampionInstance)p;
             }
         }

@@ -29,9 +29,9 @@
         {"name":"Powder","health":850, "ar":20,"mr":20,"ad":75,"ap":0, "crit%":30, "critX":210, "atspd":0.9, "range":4,"cost":1},
         {"name":"Nunu","health":1300, "ar":50,"mr":30,"ad":60,"ap":0, "crit%":20, "critX":180, "atspd":0.75, "range":1,"cost":3},
         {"name":"Nocturne","health":1000, "ar":35,"mr":25,"ad":80,"ap":0, "crit%":25, "critX":200, "atspd":0.8, "range":1,"cost":2},
-        {"name":"Zoe","health":800, "ar":20,"mr":25,"ad":40,"ap":100, "crit%":20, "critX":200, "atspd":0.9, "range":3,"cost":5},
+        {"name":"Zoe","health":800, "ar":20,"mr":25,"ad":40,"ap":100, "crit%":20, "critX":200, "atspd":0.9, "range":3,"cost":4},
         {"name":"Ziggs","health":850, "ar":20,"mr":30,"ad":50,"ap":90, "crit%":20, "critX":190, "atspd":0.85, "range":3,"cost":2},
-        {"name":"Zyra","health":900, "ar":25,"mr":30,"ad":50,"ap":95, "crit%":20, "critX":180, "atspd":0.85, "range":3,"cost":4}
+        {"name":"Zyra","health":900, "ar":25,"mr":30,"ad":50,"ap":95, "crit%":20, "critX":180, "atspd":0.85, "range":3,"cost":1}
     ]
 }
 

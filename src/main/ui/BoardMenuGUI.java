@@ -290,8 +290,7 @@ public class BoardMenuGUI {
                             // Update champion locations to match their new hex positions
                             champ1.setLocation(x2, y2);
                             champ2.setLocation(x1, y1);
-                            champ1.setLocation(x2, y2);
-                            champ2.setLocation(x1, y1);
+
                             unselect();
                         } else {
                             Hex old = hexBoard[toSwap.getX()][toSwap.getY()]; 

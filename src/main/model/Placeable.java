@@ -25,8 +25,8 @@ public abstract class Placeable {
     // MODIFIES: this
     // EFFECTS: Sets locx and locy of a  Placeable to the desired location.
     public void setLocation(int x, int y) {
-        EventLog.getInstance().logEvent(new Event("Moved" + name + " from (" + locx + ", " + locy + " )"
-                + " to (" + x + ", " + y + " )"));
+        EventLog.getInstance().logEvent(new Event("Moved" + name + " from (" + locx + ", " + locy + ")"
+                + " to (" + x + ", " + y + ")"));
         locx = x;
         locy = y;
     }

@@ -115,10 +115,18 @@ public class MainMenuGUI implements ActionListener {
                 } catch (FileNotFoundException e1) {
                     e1.printStackTrace();
                 } finally {
+                    printEventLog();
                     mainMenuJFrame.dispose();
                 }
             }
         });
+    }
+    
+    // EFFECT: Print EventLog
+    public void printEventLog() {
+        for (Event e :EventLog.getInstance()) {
+            System.out.println(e.getDescription());
+        }
     }
 
     // EFECT: display boards top-bottom in the boardPanel

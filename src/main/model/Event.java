@@ -3,6 +3,8 @@ package model;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.annotation.processing.Generated;
+
 
 /**
  * Represents an alarm system event.
@@ -53,7 +55,7 @@ public class Event {
         return (this.dateLogged.equals(otherEvent.dateLogged) 
                 && this.description.equals(otherEvent.description));
     }
-
+ 
     @Override
     public int hashCode() {
         return (HASH_CONSTANT * dateLogged.hashCode() + description.hashCode());
