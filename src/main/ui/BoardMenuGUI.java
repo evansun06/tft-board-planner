@@ -44,11 +44,9 @@ public class BoardMenuGUI {
     private JPanel statPanel;
     private JLabel statlabel;
 
-    private Timer timer;
     private Hex[][] hexBoard = new Hex[7][4];
 
     private ChampionTemplate selectedChampionTemplate;
-    private ChampionInstance toDisplay;
     private ChampionInstance toSwap;
 
 

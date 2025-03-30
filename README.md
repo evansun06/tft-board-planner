@@ -62,7 +62,22 @@ User Request 10: I want to be able to swap champion locations.
 5. All visual components (hexagonal board) were drawn in the class `Hex` as polygons.
     
 
+### Phase 4: Task 3
+The UML of my project shows that I made efforts in maintaining intuitive heiarchy but ultimately struggled to 
+keep low-coupling and high cohesion. This can be seen as the GUI classes `MainMenuGUI` and `BoardMenuGUI` both
+were responsible for many many things. This made the code hard to read and difficult to scale. I think I made the
+right choice in refactoring some complex GUI components, but in reality this should have been done for all GUI assets.
+Additionally, I think refactoring the code in each class into more digestable functions would have made the code easier
+to keep track of. 
 
+
+### Personal Notes For Future
+Currently my TFT board planner only allows the storage, movement, and display of `champions`. In TFT, each
+champion has specific synergies that activate when multiple champions of the same suit are on the board together. 
+My project excludes the consideration of synergies which is important to the gameplay of TFT. If I had more time,
+I would have loved to add this feature, so that UI could display synergies. Additionally, entities that go on the
+board don't necessarily need to be champions. I made a placeables `abstract` class for future scalability so that 
+other, non-champion, entities could be placed on the board. 
 
 
 

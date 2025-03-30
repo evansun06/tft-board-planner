@@ -40,7 +40,7 @@ public class Board {
             ChampionInstance c = new ChampionInstance(champ, x, y);
             roster.add(c);
             EventLog.getInstance().logEvent(new Event("Added " + c.getName() + ", InstanceID: "
-                    + c.getInstanceId() + " to (" + x + ", " + y + " )"));
+                    + c.getInstanceId() + " to (" + x + ", " + y + ")"));
         }
     }
 
@@ -54,7 +54,7 @@ public class Board {
         if (c != null) {
             roster.remove(getChampionFromBoard(x, y));
             EventLog.getInstance().logEvent(new Event("BoardName = " + name + " || Removed " + c.getName()
-                    + ", InstanceID: " + c.getInstanceId() + " from (" + x + ", " + y + " )"));
+                    + ", InstanceID: " + c.getInstanceId() + " from (" + x + ", " + y + ")"));
         }
     }
 

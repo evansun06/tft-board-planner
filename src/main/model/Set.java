@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 // New Sets are introduced to TFT every six months.
 public class Set {
     private String name;
-    private HashMap<String, Placeable> placeablesMap;
+    private HashMap<String, ChampionTemplate> placeablesMap;
     
     //EFFECT: creates a set with the given name, and loads the current json file
     //        with all champions in the current set (TFT 13.2)
@@ -52,7 +52,7 @@ public class Set {
     // REQUIRES: template isn't a subclass
     // MODIFIES: this
     // EFFECT: adds a template to a sets available champions
-    public void templateAdd(Placeable template) {
+    public void templateAdd(ChampionTemplate template) {
         placeablesMap.put(template.getName(), template);
     }
 
@@ -62,7 +62,7 @@ public class Set {
         return this.name;
     }
 
-    public HashMap<String, Placeable> getPlaceableHashMap() {
+    public HashMap<String, ChampionTemplate> getPlaceableHashMap() {
         return this.placeablesMap;
     }
 
