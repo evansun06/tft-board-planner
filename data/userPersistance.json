@@ -1,1 +1,62 @@
-{"boardDeck": []}
+{"boardDeck": [{
+    "roster": [
+        {
+            "nextId": 9,
+            "instanceId": 1,
+            "name": "Powder",
+            "x": 3,
+            "y": 0
+        },
+        {
+            "nextId": 9,
+            "instanceId": 2,
+            "name": "Ziggs",
+            "x": 6,
+            "y": 3
+        },
+        {
+            "nextId": 9,
+            "instanceId": 3,
+            "name": "Ziggs",
+            "x": 3,
+            "y": 3
+        },
+        {
+            "nextId": 9,
+            "instanceId": 4,
+            "name": "Gangplank",
+            "x": 2,
+            "y": 1
+        },
+        {
+            "nextId": 9,
+            "instanceId": 5,
+            "name": "Corki",
+            "x": 0,
+            "y": 3
+        },
+        {
+            "nextId": 9,
+            "instanceId": 6,
+            "name": "Jayce",
+            "x": 6,
+            "y": 0
+        },
+        {
+            "nextId": 9,
+            "instanceId": 7,
+            "name": "Cassiopeia",
+            "x": 0,
+            "y": 0
+        },
+        {
+            "nextId": 9,
+            "instanceId": 8,
+            "name": "Akali",
+            "x": 5,
+            "y": 3
+        }
+    ],
+    "name": "",
+    "history": []
+}]}
