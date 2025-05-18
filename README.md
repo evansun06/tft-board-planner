@@ -12,9 +12,9 @@
 
 Here're some of the project's best features:
 
-*   Sets are stored as JSON for inter-replaceable sets
+*   Sets are stored as JSON for quick version sync
 *   Auto-data persistence for session replayability
-*   Intuitive AI with similar in-game controls
+*   Intuitive UI with that mimic TFTs in-game controls
 *   Under-the-hood action logging
 
   
